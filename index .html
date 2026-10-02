@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="tr" data-tema="orta-dunya">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halim Kütüphanesi</title>
+<meta name="description" content="Halim Kütüphanesi — özel koleksiyonun aranabilir dizini.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%9C%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   HALİM KÜTÜPHANESİ — tek dosyalık statik dizin
+   Tema belirteçleri <html data-tema="..."> üzerinden değişir.
+   =================================================================== */
+
+/* ---------- 1. Ortak belirteçler ---------- */
+:root{
+  --en:1180px;
+  --kose:2px;
+  --bosluk:clamp(16px,4vw,28px);
+  --gecis:180ms cubic-bezier(.2,.6,.3,1);
+  --govde-font:"EB Garamond",Georgia,"Times New Roman",serif;
+  --baslik-font:"Cinzel","EB Garamond",Georgia,serif;
+}
+
+/* ---------- 2. Orta Dünya: Moria taşı, mithril, yüzük ateşi ---------- */
+[data-tema="orta-dunya"]{
+  --zemin:#0B0E0C;
+  --zemin-2:#10150F;
+  --yuzey:#151B16;
+  --yuzey-2:#1B231C;
+  --metin:#DDE4DA;
+  --metin-2:#8A9A8C;
+  --metin-3:#63705F;
+  --cizgi:rgba(201,162,39,.22);
+  --cizgi-yumusak:rgba(221,228,218,.09);
+  --vurgu:#C9A227;
+  --vurgu-parlak:#E8C65A;
+  --vurgu-uzeri:#0B0E0C;
+  --ikincil:#8FB2C4;
+  --uyari:#C4634F;
+  --isik:0 0 0 1px rgba(201,162,39,.18), 0 0 34px -16px rgba(201,162,39,.55);
+  --kart-golge:none;
+  --doku-opak:.16;
+  --doku-harman:overlay;
+  --kategori-s:46%;
+  --kategori-l:64%;
+  --tab-opak:.85;
+  --vinyet:88%;
+}
+
+/* ---------- 3. Hogwarts: mum ışığında parşömen, sepya mürekkep ---------- */
+[data-tema="hogwarts"]{
+  --zemin:#DFD0AA;
+  --zemin-2:#D6C69C;
+  --yuzey:#EBDEBD;
+  --yuzey-2:#E3D4AE;
+  --metin:#2B2015;
+  --metin-2:#6B5942;
+  --metin-3:#8A775C;
+  --cizgi:rgba(123,45,38,.28);
+  --cizgi-yumusak:rgba(43,32,21,.16);
+  --vurgu:#7B2D26;
+  --vurgu-parlak:#9B3A31;
+  --vurgu-uzeri:#F3E8CC;
+  --ikincil:#2E4A6B;
+  --uyari:#8C2F2F;
+  --isik:0 0 0 1px rgba(123,45,38,.25), 0 2px 18px -10px rgba(60,40,20,.7);
+  --kart-golge:1px 2px 0 rgba(90,70,40,.10);
+  --doku-opak:.30;
+  --doku-harman:multiply;
+  --kategori-s:44%;
+  --kategori-l:33%;
+  --tab-opak:1;
+  --vinyet:96%;
+}
+
+/* ---------- 4. Temel ---------- */
+*,*::before,*::after{box-sizing:border-box}
+/* [hidden] özniteliği, bileşenlerin display kurallarına yenik düşmesin */
+[hidden]{display:none!important}
+html{
+  scroll-padding-top:calc(96px + env(safe-area-inset-top,0px));
+  -webkit-text-size-adjust:100%;
+}
+body{
+  margin:0;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  background:var(--zemin);
+  color:var(--metin);
+  font-family:var(--govde-font);
+  font-size:17px;
+  line-height:1.55;
+  font-feature-settings:"kern" 1,"liga" 1;
+  transition:background var(--gecis),color var(--gecis);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  opacity:var(--doku-opak);mix-blend-mode:var(--doku-harman);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(130% 95% at 50% 0%, transparent 42%, color-mix(in srgb, var(--zemin) var(--vinyet), #000) 100%);
+}
+#kabuk{position:relative;z-index:1}
+
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none;padding:0}
+a{color:var(--ikincil)}
+
+:focus-visible{outline:2px solid var(--vurgu);outline-offset:2px;border-radius:var(--kose)}
+
+.gizli-metin{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+.atla{
+  position:absolute;left:12px;top:-60px;z-index:200;
+  background:var(--vurgu);color:var(--vurgu-uzeri);
+  padding:10px 16px;border-radius:var(--kose);text-decoration:none;
+}
+.atla:focus{top:12px}
+
+.kap{width:100%;max-width:var(--en);margin-inline:auto;padding-inline:var(--bosluk)}
+
+/* ---------- 5. Üst ray ---------- */
+.ray{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-block:16px;border-bottom:1px solid var(--cizgi-yumusak);
+}
+.marka{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--baslik-font);font-weight:600;font-size:15px;
+  letter-spacing:.12em;color:var(--metin);
+}
+.marka .mihr{color:var(--vurgu);font-size:13px;line-height:1}
+
+.tema-secim{
+  display:flex;align-items:center;border:1px solid var(--cizgi);
+  border-radius:999px;padding:3px;
+  background:color-mix(in srgb, var(--yuzey) 70%, transparent);
+}
+.tema-secim button{
+  padding:6px 14px;border-radius:999px;font-size:13.5px;
+  letter-spacing:.04em;color:var(--metin-2);white-space:nowrap;
+  transition:color var(--gecis),background var(--gecis);
+}
+.tema-secim button[aria-pressed="true"]{background:var(--vurgu);color:var(--vurgu-uzeri)}
+
+/* ---------- 6. Giriş: arama alanının kendisi kahraman ---------- */
+.giris{padding-block:clamp(44px,8vw,86px) clamp(26px,4vw,38px);text-align:center}
+.fisilti{font-style:italic;font-size:clamp(15px,2.4vw,18px);color:var(--metin-2);margin:0 0 20px}
+.ad{
+  font-family:var(--baslik-font);font-weight:700;
+  font-size:clamp(30px,6.4vw,54px);line-height:1.08;
+  margin:0 0 6px;letter-spacing:.14em;color:var(--metin);
+}
+.ad-alt{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  color:var(--vurgu);font-size:12px;margin-bottom:34px;
+}
+.ad-alt::before,.ad-alt::after{
+  content:"";height:1px;flex:1;max-width:120px;
+  background:linear-gradient(to right,transparent,var(--cizgi),transparent);
+}
+
+.arama-sarmal{position:relative;max-width:620px;margin-inline:auto}
+.arama-kutu{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:color-mix(in srgb, var(--yuzey) 86%, transparent);
+  border:1px solid var(--cizgi);border-radius:var(--kose);
+  box-shadow:var(--isik);
+  transition:box-shadow var(--gecis),border-color var(--gecis);
+}
+.arama-sarmal:focus-within .arama-kutu{
+  border-color:var(--vurgu);
+  box-shadow:0 0 0 1px var(--vurgu), 0 0 46px -12px var(--vurgu-parlak);
+}
+.arama-kutu svg{flex:none;color:var(--vurgu);opacity:.85}
+#arama{flex:1;min-width:0;background:none;border:none;outline:none;font-size:18px}
+#arama::placeholder{color:var(--metin-3);font-style:italic}
+.arama-ipucu{
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  font-size:12px;color:var(--metin-3);
+  border:1px solid var(--cizgi-yumusak);border-radius:4px;
+  padding:2px 7px;pointer-events:none;
+}
+.arama-sarmal:focus-within .arama-ipucu{opacity:0}
+
+.sayac{
+  margin:18px 0 0;font-size:14.5px;color:var(--metin-2);
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+}
+.sayac b{color:var(--metin);font-weight:600;font-variant-numeric:lining-nums}
+.sayac span{display:inline-flex;gap:6px}
+
+/* ---------- 7. Kategori rayı ---------- */
+.kategori-ray{
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;
+  padding:18px 0 20px;border-top:1px solid var(--cizgi-yumusak);
+  -webkit-overflow-scrolling:touch;
+}
+.kategori-ray::-webkit-scrollbar{height:4px}
+.kategori-ray::-webkit-scrollbar-thumb{background:var(--cizgi);border-radius:4px}
+.cip{
+  flex:none;display:inline-flex;align-items:center;gap:7px;
+  padding:6px 13px;border:1px solid var(--cizgi-yumusak);border-radius:999px;
+  font-size:14px;color:var(--metin-2);white-space:nowrap;
+  transition:color var(--gecis),border-color var(--gecis),background var(--gecis);
+}
+.cip:hover{color:var(--metin);border-color:var(--cizgi)}
+.cip i{width:7px;height:7px;border-radius:50%;background:var(--k,var(--vurgu));flex:none}
+.cip u{text-decoration:none;font-size:12px;color:var(--metin-3);font-variant-numeric:lining-nums}
+.cip[aria-pressed="true"]{background:var(--vurgu);border-color:var(--vurgu);color:var(--vurgu-uzeri)}
+.cip[aria-pressed="true"] u{color:color-mix(in srgb,var(--vurgu-uzeri) 72%,transparent)}
+
+/* ---------- 8. Denetim çubuğu ---------- */
+.denetim{
+  position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb, var(--zemin) 92%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-block:1px solid var(--cizgi-yumusak);
+  padding-top:env(safe-area-inset-top,0px);
+}
+.denetim-ic{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-block:11px}
+.alan{
+  display:inline-flex;align-items:center;
+  border:1px solid var(--cizgi-yumusak);border-radius:var(--kose);
+  background:var(--yuzey);
+}
+.alan select{
+  appearance:none;-webkit-appearance:none;background:none;border:none;outline:none;
+  padding:7px 30px 7px 11px;font-size:14.5px;color:var(--metin);
+  max-width:190px;text-overflow:ellipsis;cursor:pointer;
+}
+.alan::after{
+  content:"";pointer-events:none;margin-left:-22px;width:7px;height:7px;
+  border-right:1.5px solid var(--metin-2);border-bottom:1.5px solid var(--metin-2);
+  transform:rotate(45deg) translateY(-2px);
+}
+.ara-bosluk{flex:1 1 auto}
+.sonuc-sayisi{font-size:14.5px;color:var(--metin-2);font-variant-numeric:lining-nums}
+
+.dugme{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 15px;border-radius:var(--kose);
+  border:1px solid var(--cizgi);font-size:14.5px;color:var(--metin);
+  transition:background var(--gecis),color var(--gecis),border-color var(--gecis);
+}
+.dugme:hover{background:var(--yuzey-2)}
+.dugme-dolu{background:var(--vurgu);border-color:var(--vurgu);color:var(--vurgu-uzeri);font-weight:600}
+.dugme-dolu:hover{background:var(--vurgu-parlak);border-color:var(--vurgu-parlak)}
+.dugme-sade{border-color:transparent;color:var(--metin-2);padding-inline:10px}
+.dugme-sade:hover{color:var(--metin);background:var(--yuzey)}
+
+.gorunum-secim{display:inline-flex;border:1px solid var(--cizgi-yumusak);border-radius:var(--kose);overflow:hidden}
+.gorunum-secim button{padding:7px 10px;color:var(--metin-3);display:grid;place-items:center}
+.gorunum-secim button[aria-pressed="true"]{background:var(--yuzey-2);color:var(--vurgu)}
+
+/* ---------- 9. Kayıt kartları ---------- */
+.sonuc{padding-block:26px 48px;min-height:50vh}
+.izgara{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(258px,1fr))}
+.liste{display:flex;flex-direction:column;gap:0}
+
+.kart{
+  position:relative;display:flex;flex-direction:column;gap:5px;
+  padding:16px 16px 14px;background:var(--yuzey);
+  border:1px solid var(--cizgi-yumusak);border-radius:var(--kose);
+  box-shadow:var(--kart-golge);overflow:hidden;
+}
+.kart::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--k,var(--vurgu));opacity:var(--tab-opak);
+}
+.kart-ust{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+.raf{font-size:11.5px;letter-spacing:.09em;color:var(--metin-3);font-variant-numeric:lining-nums tabular-nums}
+.kart-islem{display:flex;gap:2px;opacity:0;transition:opacity var(--gecis)}
+.kart:hover .kart-islem,.kart:focus-within .kart-islem{opacity:1}
+.kart-islem button{
+  width:28px;height:28px;display:grid;place-items:center;
+  border-radius:var(--kose);color:var(--metin-3);
+  transition:color var(--gecis),background var(--gecis);
+}
+.kart-islem button:hover{background:var(--yuzey-2);color:var(--metin)}
+.kart-islem button.sil:hover{color:var(--uyari)}
+
+.kart-ad{margin:0;font-size:17.5px;font-weight:600;line-height:1.28;text-wrap:balance}
+.kart-yazar{margin:0;font-size:15px;color:var(--metin-2);font-style:italic}
+.kart-yayin{margin:0;font-size:13.5px;color:var(--metin-3)}
+.kart-alt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:12px}
+.rozet{
+  display:inline-flex;align-items:center;gap:6px;font-size:12.5px;
+  color:var(--k,var(--vurgu));
+  border:1px solid color-mix(in srgb,var(--k,var(--vurgu)) 40%,transparent);
+  border-radius:999px;padding:2px 9px;
+  background:color-mix(in srgb,var(--k,var(--vurgu)) 10%,transparent);
+}
+.tur{font-size:12.5px;color:var(--metin-3)}
+.yeni-im{font-size:11px;color:var(--vurgu);border:1px solid var(--cizgi);border-radius:999px;padding:1px 7px}
+
+.liste .kart{
+  display:grid;
+  grid-template-columns:64px minmax(0,2.2fr) minmax(0,1.4fr) minmax(0,1fr) auto;
+  align-items:center;gap:6px 14px;padding:11px 16px;
+  border-radius:0;border-inline:none;border-top:none;
+  box-shadow:none;background:transparent;
+}
+.liste .kart:first-child{border-top:1px solid var(--cizgi-yumusak)}
+.liste .kart:hover{background:var(--yuzey)}
+.liste .kart-ust{display:contents}
+/* grid-row:1 şart — yalnız grid-column verilince seyrek yerleşim yeni satır açıyor */
+.liste .raf,.liste .yeni-im{grid-column:1;grid-row:1;justify-self:start}
+.liste .kart-ad{grid-column:2;grid-row:1;font-size:16px}
+.liste .kart-yazar{grid-column:3;grid-row:1}
+.liste .kart-alt{grid-column:4;grid-row:1;margin:0;padding:0}
+.liste .kart-islem{grid-column:5;grid-row:1;justify-self:end}
+.liste .kart-yayin{display:none}
+.liste .tur{display:none}
+
+mark{background:color-mix(in srgb,var(--vurgu) 28%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+
+/* ---------- 10. Boş durum ---------- */
+.bos{text-align:center;padding:72px 20px;color:var(--metin-2)}
+.bos h2{font-family:var(--baslik-font);font-size:21px;margin:0 0 8px;color:var(--metin);letter-spacing:.06em}
+.bos p{margin:0 0 20px}
+#nobetci{height:1px}
+.daha{display:grid;place-items:center;padding-top:28px}
+
+/* ---------- 11. Kip (modal) ---------- */
+.perde{
+  position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
+  background:color-mix(in srgb,#000 62%,transparent);backdrop-filter:blur(3px);
+}
+.perde[hidden]{display:none}
+.kip{
+  width:min(560px,100%);max-height:88vh;overflow-y:auto;
+  background:var(--yuzey);border:1px solid var(--cizgi);border-radius:var(--kose);
+  box-shadow:0 30px 70px -30px rgba(0,0,0,.8);padding:26px;
+}
+.kip h2{font-family:var(--baslik-font);font-size:19px;letter-spacing:.1em;margin:0 0 4px}
+.kip-alt-yazi{margin:0 0 22px;color:var(--metin-2);font-size:14.5px}
+.satir{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.sutun{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.sutun.tam{grid-column:1/-1}
+.sutun label{font-size:13.5px;color:var(--metin-2)}
+.sutun input{
+  padding:9px 12px;background:var(--zemin-2);
+  border:1px solid var(--cizgi-yumusak);border-radius:var(--kose);
+  outline:none;font-size:15.5px;
+}
+.sutun input:focus{border-color:var(--vurgu)}
+.sutun input[aria-invalid="true"]{border-color:var(--uyari)}
+.hata{font-size:13px;color:var(--uyari)}
+.kip-islem{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+
+/* ---------- 12. Bildirim ---------- */
+#bildirim{
+  position:fixed;z-index:90;left:50%;transform:translateX(-50%);
+  bottom:calc(22px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;gap:14px;padding:11px 16px;
+  background:var(--yuzey-2);border:1px solid var(--cizgi);border-radius:var(--kose);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.85);
+  font-size:15px;max-width:calc(100vw - 32px);
+}
+#bildirim[hidden]{display:none}
+#bildirim button{color:var(--vurgu);text-decoration:underline;text-underline-offset:3px;font-size:14.5px}
+
+/* ---------- 13. Alt bilgi ---------- */
+.dip{
+  border-top:1px solid var(--cizgi-yumusak);padding-block:30px 46px;
+  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  font-size:14px;color:var(--metin-3);
+}
+.dip .mihur{font-style:italic;color:var(--metin-2)}
+.dip-islem{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ---------- 14. Duyarlı ---------- */
+@media (max-width:860px){
+  /* dar ekranda liste sütunları yığılır */
+  .liste .kart{display:flex;flex-direction:column;gap:4px;padding:13px 16px}
+  .liste .kart-ust{display:flex}
+  .liste .kart-islem{opacity:1}
+  .liste .kart-alt{padding-top:7px}
+  .liste .kart-yayin{display:block}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .izgara{grid-template-columns:1fr;gap:10px}
+  .arama-ipucu{display:none}
+  .satir{grid-template-columns:1fr}
+  .kart-islem{opacity:1}
+  .ad{letter-spacing:.07em}
+  .giris{padding-block:36px 24px}
+  .denetim-ic{gap:8px}
+  /* 1. satır: üç süzgeç — ara-bosluk satırı kırar, 2. satır: sayı + görünüm + ekle */
+  .alan{flex:1 1 0;min-width:92px}
+  .alan select{max-width:none;width:100%;font-size:14px;padding-inline:9px 24px}
+  .ara-bosluk{flex:0 0 100%;height:0}
+  .sonuc-sayisi{margin-right:auto}
+  #temizle{order:11}
+  .ray{flex-direction:column;align-items:stretch;gap:12px}
+  .marka{justify-content:center}
+  .tema-secim{justify-content:center}
+  .dip{flex-direction:column;align-items:flex-start}
+}
+
+/* ---------- 15. Açılış hareketi ---------- */
+.giris .fisilti,.giris .ad,.giris .ad-alt,.giris .arama-sarmal,.giris .sayac{
+  animation:belir 760ms cubic-bezier(.2,.7,.3,1) both;
+}
+.giris .ad{animation-delay:70ms}
+.giris .ad-alt{animation-delay:130ms}
+.giris .arama-sarmal{animation-delay:190ms}
+.giris .sayac{animation-delay:260ms}
+@keyframes belir{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+@media print{
+  .ray,.denetim,.kategori-ray,.arama-sarmal,.kart-islem,.dip-islem,#bildirim{display:none!important}
+  body{background:#fff;color:#000}
+  body::before,body::after{display:none}
+  .kart{break-inside:avoid;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<a class="atla" href="#sonuc">İçeriğe atla</a>
+
+<div id="kabuk">
+
+  <header class="kap ray">
+    <div class="marka"><span class="mihr">◈</span> Halim Kütüphanesi</div>
+    <div class="tema-secim" role="group" aria-label="Tema seçimi">
+      <button type="button" data-tema-sec="orta-dunya" aria-pressed="true">Orta Dünya</button>
+      <button type="button" data-tema-sec="hogwarts" aria-pressed="false">Hogwarts</button>
+    </div>
+  </header>
+
+  <section class="kap giris">
+    <p class="fisilti" id="fisilti">Gezinen herkes kaybolmuş değildir</p>
+    <h1 class="ad">Halim Kütüphanesi</h1>
+    <div class="ad-alt" aria-hidden="true">◈</div>
+
+    <div class="arama-sarmal">
+      <label class="gizli-metin" for="arama">Kitap, yazar, yayınevi ya da tür ara</label>
+      <div class="arama-kutu">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <input id="arama" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Kitap, yazar, yayınevi ya da tür ara">
+      </div>
+      <span class="arama-ipucu">/</span>
+    </div>
+
+    <p class="sayac" id="sayac"></p>
+  </section>
+
+  <nav class="kap" aria-label="Kategoriler">
+    <div class="kategori-ray" id="kategoriRay"></div>
+  </nav>
+
+  <div class="denetim">
+    <div class="kap denetim-ic">
+      <span class="alan"><select id="fYazar" aria-label="Yazara göre süz"></select></span>
+      <span class="alan"><select id="fYayinevi" aria-label="Yayınevine göre süz"></select></span>
+      <span class="alan"><select id="fSirala" aria-label="Sıralama">
+        <option value="no">Kayıt sırası</option>
+        <option value="ad">Kitap adı (A→Z)</option>
+        <option value="ad-ters">Kitap adı (Z→A)</option>
+        <option value="yazar">Yazar (A→Z)</option>
+        <option value="kategori">Kategori</option>
+        <option value="yeni">Önce eklenenler</option>
+      </select></span>
+      <button type="button" class="dugme dugme-sade" id="temizle" hidden>Süzgeçleri temizle</button>
+
+      <span class="ara-bosluk"></span>
+
+      <span class="sonuc-sayisi" id="sonucSayisi" aria-live="polite"></span>
+
+      <span class="gorunum-secim" role="group" aria-label="Görünüm">
+        <button type="button" data-gorunum="izgara" aria-pressed="true" aria-label="Kart görünümü">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button type="button" data-gorunum="liste" aria-pressed="false" aria-label="Liste görünümü">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </span>
+
+      <button type="button" class="dugme dugme-dolu" id="ekleAc">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        Kitap ekle
+      </button>
+    </div>
+  </div>
+
+  <main class="kap sonuc" id="sonuc">
+    <div class="izgara" id="kayitlar"></div>
+    <div class="daha" id="daha" hidden>
+      <button type="button" class="dugme" id="dahaDugme">Daha fazla göster</button>
+    </div>
+    <div id="nobetci"></div>
+  </main>
+
+  <footer class="kap dip">
+    <span class="mihur" id="mihur">Yol hep devam eder</span>
+    <span class="dip-islem">
+      <button type="button" class="dugme dugme-sade" id="disaJson">JSON indir</button>
+      <button type="button" class="dugme dugme-sade" id="disaCsv">CSV indir</button>
+      <button type="button" class="dugme dugme-sade" id="iceAktar">JSON yükle</button>
+      <button type="button" class="dugme dugme-sade" id="sifirla">Değişiklikleri geri al</button>
+      <input type="file" id="dosya" accept="application/json,.json" class="gizli-metin">
+    </span>
+  </footer>
+
+</div>
+
+<div class="perde" id="perde" hidden>
+  <div class="kip" role="dialog" aria-modal="true" aria-labelledby="kipBaslik">
+    <h2 id="kipBaslik">Kitap ekle</h2>
+    <p class="kip-alt-yazi" id="kipAltYazi">Yeni cilt dizine eklenir ve bu tarayıcıda saklanır.</p>
+    <form id="kipForm" novalidate>
+      <div class="sutun tam">
+        <label for="gKitap">Kitap adı</label>
+        <input id="gKitap" name="kitap" autocomplete="off">
+        <span class="hata" id="hKitap"></span>
+      </div>
+      <div class="satir">
+        <div class="sutun">
+          <label for="gYazar">Yazar</label>
+          <input id="gYazar" name="yazar" list="lYazar" autocomplete="off">
+        </div>
+        <div class="sutun">
+          <label for="gKategori">Kategori</label>
+          <input id="gKategori" name="kategori" list="lKategori" autocomplete="off">
+          <span class="hata" id="hKategori"></span>
+        </div>
+      </div>
+      <div class="satir">
+        <div class="sutun">
+          <label for="gTur">Tür / dizi</label>
+          <input id="gTur" name="tur" list="lTur" autocomplete="off">
+        </div>
+        <div class="sutun">
+          <label for="gYayinevi">Yayınevi</label>
+          <input id="gYayinevi" name="yayinevi" list="lYayinevi" autocomplete="off">
+        </div>
+      </div>
+      <div class="kip-islem">
+        <button type="button" class="dugme" id="kipIptal">Vazgeç</button>
+        <button type="submit" class="dugme dugme-dolu" id="kipKaydet">Dizine ekle</button>
+      </div>
+    </form>
+    <datalist id="lYazar"></datalist>
+    <datalist id="lKategori"></datalist>
+    <datalist id="lTur"></datalist>
+    <datalist id="lYayinevi"></datalist>
+  </div>
+</div>
+
+<div id="bildirim" role="status" hidden><span id="bildirimMetin"></span></div>
+<script>
+(function(){
+"use strict";
+
+/* ===================================================================
+   1. VERİ
+   Tohum kayıtlar dizi-of-dizi olarak gömülüdür (dosya boyutu için).
+   Sütun sırası SUTUNLAR sabitinde tanımlıdır.
+   =================================================================== */
+const SUTUNLAR = ["no","kategori","tur","yazar","kitap","yayinevi"];
+const TOHUM = /*VERI-BASI*/[[1,"Adli bilimler","Suç","","Suç Kitabı","Alfa Yayınları"],[2,"Bahçe ve bitkiler","Meyvecilik","Alan Buckingham","Meyve Kitabı","Alfa Yayınları"],[3,"Bahçe ve bitkiler","Sebzecilik","Alan Buckingham","Sebze Kitabı","Alfa Yayınları"],[4,"Bahçe ve bitkiler","Bitkiler / doğa","Daniel Chamovitz","Bitkilerin Bildikleri","Aylak Adam Yayınları"],[5,"Bahçe ve bitkiler","Bahçecilik","Gülnar Onay","Bahçem ve Ben","Remzi Kitabevi"],[6,"Bahçe ve bitkiler","Ağaçlar / doğa yazıları","Hermann Hesse","Ağaçlar",""],[7,"Bahçe ve bitkiler","Bitkiler / doğa","Maurice Maeterlinck","Çiçeklerin Zekâsı",""],[8,"Bahçe ve bitkiler","Bahçıvanlık","Peter McHoy","Bahçıvanın El Kitabı","İş Bankası Kültür Yayınları"],[9,"Bahçe ve bitkiler","Ağaçlar / doğa","Peter Wohlleben","Ağaçların Gizli Yaşamı","Kitap Kurdu"],[10,"Bahçe ve bitkiler","Yem bitkileri","Sıha Çaroğlu","Yonca ve Yem Bitkileri",""],[11,"Bahçe ve bitkiler","Bitkiler / doğa","Stefano Mancuso; Alessandra Viola","Bitki Zekâsı","Yeni İnsan Yayınevi"],[12,"Bahçe ve bitkiler","Saksı bahçeciliği","Stephanie Donaldson; Peter McHoy","Saksı Bitkileri El Kitabı","İş Bankası Kültür Yayınları"],[13,"Başvuru","Gerçekten bilmeniz gereken 50 fikir","Adrian Furnham","Gerçekten Bilmeniz Gereken 50 Psikoloji Fikri","Domingo Yayınevi"],[14,"Başvuru","Gerçekten bilmeniz gereken 50 fikir","Ben Dupré","Gerçekten Bilmeniz Gereken 50 Felsefe Fikri","Domingo Yayınevi"],[15,"Başvuru","Edebiyat ansiklopedisi","David S. Kidder; Noah D. Oppenheim","Entelektüelin Kutsal Kitabı — 1. Cilt",""],[16,"Başvuru","Edebiyat ansiklopedisi","David S. Kidder; Noah D. Oppenheim","Entelektüelin Kutsal Kitabı — 2. Cilt",""],[17,"Başvuru","Edebiyat ansiklopedisi","David S. Kidder; Noah D. Oppenheim","Entelektüelin Kutsal Kitabı — 3. Cilt",""],[18,"Başvuru","Gerçekten bilmeniz gereken 50 fikir","Edmund Conway","Gerçekten Bilmeniz Gereken 50 Ekonomi Fikri","Domingo Yayınevi"],[19,"Başvuru","Edebiyat tarihi","Henry Russell","Romanın Kısa Öyküsü",""],[20,"Başvuru","Ekonomi ve çevre","Jason Hickel","Çoğu Zarar Azı Karar",""],[21,"Başvuru","Gerçekten bilmeniz gereken 50 fikir","Joanne Baker","Gerçekten Bilmeniz Gereken 50 Fizik Fikri","Domingo Yayınevi"],[22,"Başvuru","Komplo ve örgütler","Joel Levy","Gizli Cemiyetler Kitabı","Alfa Yayınları"],[23,"Başvuru","Genel kültür","John Lloyd; John Mitchinson","Cahillikler Kitabı 1","Alfa Yayınları"],[24,"Başvuru","Genel kültür","John Lloyd; John Mitchinson","Cahillikler Kitabı 2","Alfa Yayınları"],[25,"Başvuru","Genel kültür","John Lloyd; John Mitchinson","Cahillikler Kitabı 3 — Hayvanlar Alemi","Alfa Yayınları"],[26,"Başvuru","Genel kültür","John Lloyd; John Mitchinson","Cahillikler Kitabı 3,5","Alfa Yayınları"],[27,"Başvuru","Biyografi","Michael H. Hart","En Etkin 100","Sabah Kitapları"],[28,"Başvuru","Gerçekten bilmeniz gereken 50 fikir","Tony Crilly","Gerçekten Bilmeniz Gereken 50 Matematik Fikri","Domingo Yayınevi"],[29,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Astronomi Kitabı","Alfa Yayınları"],[30,"Başvuru","Nasıl Çalışır dizisi","","Besin Nasıl Çalışır","Alfa Yayınları"],[31,"Başvuru","Nasıl Çalışır dizisi","","Beyin Nasıl Çalışır","Alfa Yayınları"],[32,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Bilim Kitabı","Alfa Yayınları"],[33,"Başvuru","Nasıl Çalışır dizisi","","Bilim Nasıl Çalışır","Alfa Yayınları"],[34,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Biyoloji Kitabı","Alfa Yayınları"],[35,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Edebiyat Kitabı","Alfa Yayınları"],[36,"Başvuru","Mitoloji","","Efsaneler ve Mitler","Alfa Yayınları"],[37,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Ekoloji Kitabı","Alfa Yayınları"],[38,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Ekonomi Kitabı","Alfa Yayınları"],[39,"Başvuru","Nasıl Çalışır dizisi","","Felsefe Nasıl Çalışır","Alfa Yayınları"],[40,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Fizik Kitabı","Alfa Yayınları"],[41,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Hukuk Kitabı","Alfa Yayınları"],[42,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","İşletme Kitabı","Alfa Yayınları"],[43,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Kimya Kitabı","Alfa Yayınları"],[44,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Matematik Kitabı","Alfa Yayınları"],[45,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Mitoloji Kitabı","Alfa Yayınları"],[46,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Psikoloji Kitabı","Alfa Yayınları"],[47,"Başvuru","Nasıl Çalışır dizisi","","Psikoloji Nasıl Çalışır","Alfa Yayınları"],[48,"Başvuru","Simgeler","","Semboller ve İşaretler","Alfa Yayınları"],[49,"Başvuru","Edebiyat rehberi","","Sherlock Holmes Kitabı","Alfa Yayınları"],[50,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Siyaset Kitabı","Alfa Yayınları"],[51,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Sosyoloji Kitabı","Alfa Yayınları"],[52,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Tarih Kitabı","Alfa Yayınları"],[53,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Tasarım Kitabı","Alfa Yayınları"],[54,"Başvuru","Nasıl Çalışır dizisi","","Teknoloji Nasıl Çalışır","Alfa Yayınları"],[55,"Başvuru","Büyük Fikirleri Kolayca Anlayın","","Tıp Kitabı","Alfa Yayınları"],[56,"Başvuru","Nasıl Çalışır dizisi","","Uzay Nasıl Çalışır","Alfa Yayınları"],[57,"Başvuru","Nasıl Çalışır dizisi","","Vücut Nasıl Çalışır","Alfa Yayınları"],[58,"Bilim","Bilim tarihi","Cemal Yıldırım","Bilim Tarihi","Remzi Kitabevi"],[59,"Bilim","Astronomi","Charles C. Cockell","Astrobiyoloji","Alfa Yayınları"],[60,"Bilim","Bilim tarihi","Christophe Galfard","Evren Avucunda","Domingo Yayınevi"],[61,"Bilim","Bilim tarihi","Fuat Sezgin","İslam’da Bilim Tarihi Sohbetleri","Pınar Yayınları"],[62,"Bilim","Toplum / veri okuryazarlığı","Hans Rosling","Factfulness","Pegasus Yayınları"],[63,"Bilim","Matematik","Mario Livio","Tanrı Matematikçi mi?","Altın Kitaplar"],[64,"Bilim","Astronomi","Mark Miodownik","Eşyanın Tabiatı",""],[65,"Bilim","Bilim insanları / aforizmalar","Nikola Tesla","Aforizmalar","Nemesis Kitap"],[66,"Bilim","Biyografi","Nikola Tesla","Tesla — İcatlarım","Nemesis Kitap"],[67,"Bilim","Doğa","Randall Munroe","Farz Edelim Ki","Pegasus Yayınları"],[68,"Bilim","Uçuş","Richard Dawkins","Uçma Hayali","Alfa Yayınları"],[69,"Bilim","Beyin","Rita Carter","Beyin Kitabı","Alfa Yayınları"],[70,"Bilim","Bilim tarihi","Tom Jackson","Bilimin Kısa Öyküsü",""],[71,"Bilim","Biyografi","Vladimir Pistalo","Tesla: Maskelerle Çevrili Bir Hayat","Nemesis Kitap"],[72,"Bilim","Buluşlar","","İcatlar","TÜBİTAK Yayınları"],[73,"Bilim","Buluşlar","","Leonardo’nun Makineleri","Pegasus Yayınları"],[74,"Bilim","Anatomi","","Vücut Kitabı","Alfa Yayınları"],[75,"Bilim kurgu","Roman","Aldous Huxley","Cesur Yeni Dünya","İthaki Yayınları"],[76,"Bilim kurgu","Roman","Aleksandr Belyayev","Hava Adamı Ariel","İthaki Yayınları"],[77,"Bilim kurgu","Roman","Aleksandr Belyayev","Su Adamı","İthaki Yayınları"],[78,"Bilim kurgu","Roman","Andy Weir","Marslı","İthaki Yayınları"],[79,"Bilim kurgu","Roman","Arthur C. Clarke","Çocukluğun Sonu","İthaki Yayınları"],[80,"Bilim kurgu","Roman","Douglas Adams","Otostopçunun Galaksi Rehberi: Beş Perdelik Bir Üçleme","Alfa Yayınları"],[81,"Bilim kurgu","","Frank Herbert","Dune","İthaki Yayınları"],[82,"Bilim kurgu","","Frank Herbert","Dune Çocukları","İthaki Yayınları"],[83,"Bilim kurgu","","Frank Herbert","Dune Mesihi","İthaki Yayınları"],[84,"Bilim kurgu","","Frank Herbert","Dune Rahibeler Meclisi","İthaki Yayınları"],[85,"Bilim kurgu","","Frank Herbert","Dune Sapkınları","İthaki Yayınları"],[86,"Bilim kurgu","","Frank Herbert","Dune Tanrı İmparatoru","İthaki Yayınları"],[87,"Bilim kurgu","Roman","H. G. Wells","Dünyalar Savaşı","Türkiye İş Bankası Kültür Yayınları"],[88,"Bilim kurgu","Roman","H. G. Wells","Görünmez Adam","İthaki Yayınları"],[89,"Bilim kurgu","Roman","H. G. Wells","Görünmez Adam","Karbon Kitaplar"],[90,"Bilim kurgu","Roman","H. G. Wells","Zaman Makinesi","Karbon Kitaplar"],[91,"Bilim kurgu","Roman","H. G. Wells","Zaman Makinesi: Bir Buluş","Türkiye İş Bankası Kültür Yayınları"],[92,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Ben, Robot","İthaki Yayınları"],[93,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Çelik Mağaralar","İthaki Yayınları"],[94,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Çıplak Güneş","İthaki Yayınları"],[95,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Gökteki Çakıl Taşı","İthaki Yayınları"],[96,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","İkinci Vakıf","İthaki Yayınları"],[97,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Robotlar ve İmparatorluk","İthaki Yayınları"],[98,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Şafağın Robotları","İthaki Yayınları"],[99,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Toz Gibi Yıldızlar","İthaki Yayınları"],[100,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Uzay Akımları","İthaki Yayınları"],[101,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Vakıf","İthaki Yayınları"],[102,"Bilim kurgu","Vakıf dizisi","Isaac Asimov","Vakıf İleri","İthaki Yayınları"],[103,"Bilim kurgu","Vakıf dizisi","Isaac Asimov","Vakıf Kurulurken","İthaki Yayınları"],[104,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Vakıf ve Dünya","İthaki Yayınları"],[105,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Vakıf ve İmparatorluk","İthaki Yayınları"],[106,"Bilim kurgu","Vakıf / Robot / İmparatorluk evreni","Isaac Asimov","Vakıf’ın Sınırı","İthaki Yayınları"],[107,"Bilim kurgu","","Marie Lu","Warcross",""],[108,"Bilim kurgu","","Marie Lu","Wildcard",""],[109,"Bilim kurgu","Roman","Pierre Boulle","Maymunlar Gezegeni","İthaki Yayınları"],[110,"Bilim kurgu","Roman","Ray Bradbury","Fahrenheit 451","İthaki Yayınları"],[111,"Bilim kurgu","Öykü","Ray Bradbury","Mars Yıllıkları","İthaki Yayınları"],[112,"Çin","Edebiyat","Afife Helena Sözmen","Modern Çin Edebiyatının Öyküsü","Nota Bene Yayınları"],[113,"Çin","Felsefe","Bülent Okay","Konfüçyüs ve Çin Felsefesinin Temelleri",""],[114,"Çin","İş ve siyaset","Cemre Pekcan","Çin Dış Politikası ve ABD ile İlişkiler",""],[115,"Çin","Kültür","Daniel Leese","Çin Kültür Devrimi","İnkılâp Kitabevi"],[116,"Çin","Siyaset","Eric Helleiner; Jonathan Kirshner (ed.)","Yeni Çin Seddi",""],[117,"Çin","Tarih","Eugène Simon","Çin Uygarlığı","Doğu Batı Yayınları"],[118,"Çin","Tarih","Fatih Oktay","Çin: Yeni Büyük Güç ve Değişen Dünya Dengeleri",""],[119,"Çin","İş ve siyaset","Ferhat Kurban Tanrıdağlı","Çin Rüyası: Küresel Güç Olma Sevdası","Çınaraltı Yayınları"],[120,"Çin","Felsefe","Fung Yu-Lan","Çin Felsefesi Tarihi",""],[121,"Çin","Tarih","Gonca Ünal Chiang; Ferma Ecem Ceylan; Ertuğrul Cevan (ed.)","Çin Medeniyeti: Tarih, Kültür, Edebiyat, Felsefe","Kesit Yayınları"],[122,"Çin","El sanatları","Guo Qunhui; Wang Lidan","Çin’de Zanaat","Kaynak Yayınları"],[123,"Çin","Yazı","Han Jiantang","Çin Yazı Karakterleri","Kaynak Yayınları"],[124,"Çin","Edebiyat","Helwig Schmidt-Glintzer","Eski Çin",""],[125,"Çin","Tarih","Henry Kissinger","Çin","Kaknüs Yayınları"],[126,"Çin","Gelenek","Hua Mei","Çin Giyim Kültürü","Kaynak Yayınları"],[127,"Çin","Mitoloji","John C. Ferguson","Çin Mitolojisi",""],[128,"Çin","Tarih","John Keay","Çin Tarihi",""],[129,"Çin","İş ve siyaset","Ku Hung-Ming","Çin Halkının Zihniyeti","Doğu Batı Yayınları"],[130,"Çin","Edebiyat","Li Chunyu","Çin Edebiyatı: Eski Çağlardan Günümüze","Kaynak Yayınları"],[131,"Çin","Tarih","Linda Jaivin","Kısa Çin Tarihi",""],[132,"Çin","Mutfak","Liu Junru","Çin Mutfağı","Kaynak Yayınları"],[133,"Çin","Çin edebiyatı","Mo Yan","İri Memeler ve Geniş Kalçalar",""],[134,"Çin","Çin edebiyatı","Mo Yan","Kızıl Darı Tarlaları",""],[135,"Çin","Çin edebiyatı","Mo Yan","Yaşam ve Ölüm Yorgunu",""],[136,"Çin","Felsefe","Mozi","Bilgelik Yolu","Saokultur Yayınları"],[137,"Çin","İş ve siyaset","Mustafa Güldağı","Çin’in Küresel Kuşatması","Lopus Yayınları"],[138,"Çin","Tarih","Mustafa Yağcı; Caner Bakır (ed.)","Çin Bilmecesi",""],[139,"Çin","Edebiyat","Richard Wilhelm","Çin Masalları — Cilt I",""],[140,"Çin","Edebiyat","Richard Wilhelm","Çin Masalları — Cilt II",""],[141,"Çin","Tarih","S. Can Yolaç","Herkes İçin Çin Tarihi","E Yayınları"],[142,"Çin","Kültür","Wang Xuewen","Çin Kültüründe Bayramlar","Kaynak Yayınları"],[143,"Çin","Tarih","Wolfram Eberhard","Çin Tarihi",""],[144,"Çin","Çin edebiyatı","Yu Hua","On Sözcükte Çin","Jaguar Kitap"],[145,"Çin","Gelenek","Zhang Yiping","İpek Yolunun Öyküsü","Kaynak Yayınları"],[146,"Çin","Edebiyat","","Çin Modern Edebiyatı Deneme Eserleri Seçkisi",""],[147,"Çin","Uluslararası ilişkiler","","Çin: Kuşak Yol İnisiyatifi Türkiye’nin Uluslararası Ticaretine Etkisi",""],[148,"Çin","Tarih","","Klasik Çin Şiirinden Seçmeler","Yapı Kredi Yayınları"],[149,"Çizgi roman","Grafik roman","Alfred","Eski Gibi","Karakarga"],[150,"Çizgi roman","Grafik roman","Fábio Moon; Gabriel Bá","Güngezgini","Arkabahçe Yayıncılık"],[151,"Çizgi roman","Grafik roman","George Orwell; Fido Nesti","1984 (Grafik Roman)","Domingo Yayınevi"],[152,"Çizgi roman","Marvel","Greg Pak; Carmine Di Giandomenico","X-Men: Magneto Vasiyet","Çizgi Düşler"],[153,"Çizgi roman","Grafik roman","Guy Delisle","Shenzhen: Çin’den Bir Gezi Hikâyesi","Kara Karga Yayınları"],[154,"Çizgi roman","Batman","Jeph Loeb; Tim Sale","Batman: Bitmeyen Cadılar Bayramı","JBC Yayıncılık"],[155,"Çizgi roman","Grafik roman","Manu Larcenet","Sıradan Zaferler","Karakarga"],[156,"Çocuk gelişimi","Ebeveynlik","Adem Güneş","Annelik Sanatı","Timaş Yayınları"],[157,"Çocuk gelişimi","Psikoloji","Haluk Yavuzer","Çocuk Psikolojisi",""],[158,"Çocuk gelişimi","Ebeveynlik","Selçuk Şirin","Yetişin Çocuklar","Doğan Kitap"],[159,"Dil öğrenimi ve sözlükler","İngilizce","Adam Zya","80 Derste İngilizce","Beşir Kitabevi"],[160,"Dil öğrenimi ve sözlükler","Arapça","Mehmet Maksudoğlu","Arapçayı Öğreten Kitap",""],[161,"Dil öğrenimi ve sözlükler","Arapça","Mehmet Maksudoğlu","Kendi Kendine Pratik Arapça Konuşma Kılavuzu","Epsilon Yayınları"],[162,"Dil öğrenimi ve sözlükler","İngilizce","Melik Safi Duyar","Repetition for TOEFL & KPDS","Mega Hafıza"],[163,"Dil öğrenimi ve sözlükler","İngilizce","Melik Safi Duyar","Word Memory Power","Mega Hafıza"],[164,"Dil öğrenimi ve sözlükler","İngilizce","Murat Ersin","Etkili İngilizce Öğreniyorum",""],[165,"Dil öğrenimi ve sözlükler","Arapça","Musa Yıldız; Erkan Avşar","Türkçe Çevirileriyle Arapça Seçme Hikâyeler 1",""],[166,"Dil öğrenimi ve sözlükler","Dilbilim","Ulaş Töre Sivrioğlu","Kayıp Uygarlıklar ve Diller","Kafka Yayınevi"],[167,"Dil öğrenimi ve sözlükler","Çince","","21天征服HSK（高等）词汇（口试）",""],[168,"Dil öğrenimi ve sözlükler","İspanyolca","","30 Günde İspanyolca","Fono Yayınları"],[169,"Dil öğrenimi ve sözlükler","Çince","","A Dictionary of Chinese Usage: 8000 Words","Commercial Press"],[170,"Dil öğrenimi ve sözlükler","Almanca","","Almanca İlk Adım 1","Fono Yayınları"],[171,"Dil öğrenimi ve sözlükler","Almanca","","Almanca İlk Adım 2","Fono"],[172,"Dil öğrenimi ve sözlükler","Almanca","","Almanca İlk Adım 3","Fono"],[173,"Dil öğrenimi ve sözlükler","Çince","","Boya Chinese: 情景汉语, 中级 II","Peking University Press"],[174,"Dil öğrenimi ve sözlükler","Çince","","Boya Chinese: 情景汉语, 初级 I","Peking University Press"],[175,"Dil öğrenimi ve sözlükler","Çince","","Çince–Türkçe Türkçe–Çince Temel Sözlük",""],[176,"Dil öğrenimi ve sözlükler","İngilizce","","English for Everyone: Practice Book","DK"],[177,"Dil öğrenimi ve sözlükler","Çince","","HSK 商务馆 HSK 丛书 · 初中等语法篇",""],[178,"Dil öğrenimi ve sözlükler","İspanyolca","","İspanyolca Deyimler",""],[179,"Dil öğrenimi ve sözlükler","İspanyolca","","İspanyolca İlk Adım 1","Fono Yayınları"],[180,"Dil öğrenimi ve sözlükler","İngilizce","","Türkçe Açıklamalı English Grammar Today",""],[181,"Dil öğrenimi ve sözlükler","İngilizce","","Yeni Başlayanlar İçin İngilizce / English for Beginners","Alfa Yayınları"],[182,"Dil öğrenimi ve sözlükler","İspanyolca","","Yoğun Metodla İspanyolca",""],[183,"Dil öğrenimi ve sözlükler","Çince","","原声汉语 · 中级汉语听力教程",""],[184,"Dil öğrenimi ve sözlükler","Çince","","发展汉语 · 中级汉语口语 上",""],[185,"Dil öğrenimi ve sözlükler","Çince","","发展汉语 · 中级汉语口语 下",""],[186,"Dil öğrenimi ve sözlükler","Çince","","桥梁 下 · 实用汉语课本",""],[187,"Dil öğrenimi ve sözlükler","Çince","","步步高汉语阅读教程 第4册",""],[188,"Dil öğrenimi ve sözlükler","Çince","","步步高汉语阅读教程 第5册",""],[189,"Dil öğrenimi ve sözlükler","Çince","","汉语口语词典 (Çince Konuşma Sözlüğü)",""],[190,"Dil öğrenimi ve sözlükler","Çince","","汉语口语速成 · 中级篇",""],[191,"Dil öğrenimi ve sözlükler","Çince","","汉语听说教程 上",""],[192,"Dil öğrenimi ve sözlükler","Çince","","汉语听说教程 下",""],[193,"Dil öğrenimi ve sözlükler","Çince","","汉语教学实用语法 (Çince Öğretimi İçin Uygulamalı Dilbilgisi)",""],[194,"Dil öğrenimi ve sözlükler","Çince","","现代汉语实用词典 (Çağdaş Çince Kullanım Sözlüğü)",""],[195,"Dil öğrenimi ve sözlükler","Çince","","精读汉语 1 · 高级","Peking University Press"],[196,"Dinî eserler","Biyografi / düşünce","Beder Aydın","Örnek İnsanlar",""],[197,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 1. Cilt",""],[198,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 2. Cilt",""],[199,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 3. Cilt",""],[200,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 4. Cilt",""],[201,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 5. Cilt",""],[202,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 6. Cilt",""],[203,"Dinî eserler","Kur’an ve tefsir","Ebu’l A‘lâ Mevdûdî","Tefhîmü’l-Kur’ân — 7. Cilt",""],[204,"Dinî eserler","Tasavvuf ve edebiyat","Ferîdüddin Attâr","Esrârnâme",""],[205,"Dinî eserler","Tasavvuf ve edebiyat","Ferîdüddin Attâr","Mantıku’t-Tayr",""],[206,"Dinî eserler","Tasavvuf ve edebiyat","Hikmet Anıl Öztekin","Elif Gibi Sevmek",""],[207,"Dinî eserler","Tasavvuf ve edebiyat","İbn Atâullah el-İskenderî","Gelin Tâcı",""],[208,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 1. Cilt","Karınca & Polen Yayınları"],[209,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 10. Cilt","Karınca & Polen Yayınları"],[210,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 11. Cilt","Karınca & Polen Yayınları"],[211,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 12. Cilt","Karınca & Polen Yayınları"],[212,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 2. Cilt","Karınca & Polen Yayınları"],[213,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 3. Cilt","Karınca & Polen Yayınları"],[214,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 4. Cilt","Karınca & Polen Yayınları"],[215,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 5. Cilt","Karınca & Polen Yayınları"],[216,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 6. Cilt","Karınca & Polen Yayınları"],[217,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 7. Cilt","Karınca & Polen Yayınları"],[218,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 8. Cilt","Karınca & Polen Yayınları"],[219,"Dinî eserler","Kur’an ve tefsir","İbn Kesîr","İbn-i Kesîr Tefsiri — 9. Cilt","Karınca & Polen Yayınları"],[220,"Dinî eserler","Hadis","İmam Buhârî","Edebü’l-Müfred — 1. Cilt","Semerkand Yayınları"],[221,"Dinî eserler","Hadis","İmam Buhârî","Edebü’l-Müfred — 2. Cilt","Semerkand Yayınları"],[222,"Dinî eserler","Ahiret ve inanç","İmam Gazâlî","Ahiret Hayatı: Ölüm, Kabir, Kıyamet",""],[223,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 1. Cilt","Semerkand Yayınları"],[224,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 10. Cilt","Semerkand Yayınları"],[225,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 11. Cilt","Semerkand Yayınları"],[226,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 2. Cilt","Semerkand Yayınları"],[227,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 3. Cilt","Semerkand Yayınları"],[228,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 4. Cilt","Semerkand Yayınları"],[229,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 6. Cilt","Semerkand Yayınları"],[230,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 7. Cilt","Semerkand Yayınları"],[231,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 8. Cilt","Semerkand Yayınları"],[232,"Dinî eserler","Tasavvuf ve ahlak","İmam Gazâlî","İhyâü Ulûmi’d-Dîn — 9. Cilt","Semerkand Yayınları"],[233,"Dinî eserler","Kur’an ve tefsir","İmam Gazâlî","Kur’ân’ı Okumak ve Anlamak",""],[234,"Dinî eserler","Kelam / düşünce","İmam Gazâlî","Tehâfütü’l-Felâsife",""],[235,"Dinî eserler","Ahlak ve adab","İmam Mâverdî","Edebü’d-Dünyâ ve’d-Dîn","Tahlil Yayınları"],[236,"Dinî eserler","Hadis","İmam Nevevî","Riyâzü’s-Sâlihîn — 1. Cilt","Semerkand Yayınları"],[237,"Dinî eserler","Hadis","İmam Nevevî","Riyâzü’s-Sâlihîn — 2. Cilt","Semerkand Yayınları"],[238,"Dinî eserler","Hadis","İmam Nevevî","Riyâzü’s-Sâlihîn — 3. Cilt","Semerkand Yayınları"],[239,"Dinî eserler","Siyer ve sahabe","Kadı İyâz","Şifâ-i Şerîf — 1. Cilt","Semerkand Yayınları"],[240,"Dinî eserler","Siyer ve sahabe","Kadı İyâz","Şifâ-i Şerîf — 2. Cilt","Semerkand Yayınları"],[241,"Dinî eserler","Siyer ve sahabe","Kadı İyâz","Şifâ-i Şerîf — 3. Cilt","Semerkand Yayınları"],[242,"Dinî eserler","Tasavvuf ve edebiyat","Mecit Ömür Öztürk","Dervişin Teselli Koleksiyonu — 1. Kitap","Hayykitap"],[243,"Dinî eserler","Tasavvuf ve edebiyat","Mecit Ömür Öztürk","Dervişin Teselli Koleksiyonu — 2. Kitap","Hayykitap"],[244,"Dinî eserler","Tasavvuf ve edebiyat","Mecit Ömür Öztürk","Dervişin Teselli Koleksiyonu — 3. Kitap","Hayykitap"],[245,"Dinî eserler","Maneviyat ve psikoloji","Mecit Ömür Öztürk","İçebakış Fragmanları",""],[246,"Dinî eserler","Tasavvuf ve edebiyat","Mevlânâ Celâleddîn-i Rûmî","Mesnevî-i Şerîf: Tam Metin","Timaş Yayınları"],[247,"Dinî eserler","Kur’an ve meal","Muhammed Esed","Kur’an Mesajı: Meal-Tefsir",""],[248,"Dinî eserler","Siyer ve sahabe","Muhammed Yusuf Kandehlevî","Hayâtü’s-Sahâbe — 1. Cilt","Semerkand Yayınları"],[249,"Dinî eserler","Siyer ve sahabe","Muhammed Yusuf Kandehlevî","Hayâtü’s-Sahâbe — 2. Cilt","Semerkand Yayınları"],[250,"Dinî eserler","Siyer ve sahabe","Muhammed Yusuf Kandehlevî","Hayâtü’s-Sahâbe — 3. Cilt","Semerkand Yayınları"],[251,"Dinî eserler","Siyer ve sahabe","Muhammed Yusuf Kandehlevî","Hayâtü’s-Sahâbe — 4. Cilt","Semerkand Yayınları"],[252,"Dinî eserler","Risale-i Nur üzerine","Nevzat Tarhan","Akıldan Kalbe Yolculuk","Timaş Yayınları"],[253,"Dinî eserler","İnanç ve bilim","Nevzat Tarhan","Bilgelik Psikolojisi 1","Timaş Yayınları"],[254,"Dinî eserler","İnanç ve bilim","Nevzat Tarhan","Bilgelik Psikolojisi 2","Timaş Yayınları"],[255,"Dinî eserler","Risale-i Nur üzerine","Nevzat Tarhan","Çağın Vicdanı Bediüzzaman","Timaş Yayınları"],[256,"Dinî eserler","İnanç ve bilim","Nevzat Tarhan","İnanç Psikolojisi ve Bilim","Timaş Yayınları"],[257,"Dinî eserler","İman ve tefekkür","Said Nursî","Asâ-yı Mûsâ","Yeni Asya Neşriyat"],[258,"Dinî eserler","İman ve tefekkür","Said Nursî","Barla Lâhikası","Yeni Asya Neşriyat"],[259,"Dinî eserler","İman ve tefekkür","Said Nursî","Emirdağ Lâhikası","Yeni Asya Neşriyat"],[260,"Dinî eserler","İman ve tefekkür","Said Nursî","İman ve Küfür Muvazeneleri","Yeni Asya Neşriyat"],[261,"Dinî eserler","İman ve tefekkür","Said Nursî","Kastamonu Lâhikası","Yeni Asya Neşriyat"],[262,"Dinî eserler","İman ve tefekkür","Said Nursî","Lem’alar","Yeni Asya Neşriyat"],[263,"Dinî eserler","İman ve tefekkür","Said Nursî","Mektubat","Yeni Asya Neşriyat"],[264,"Dinî eserler","İman ve tefekkür","Said Nursî","Mesnevî-i Nuriye","Yeni Asya Neşriyat"],[265,"Dinî eserler","İman ve tefekkür","Said Nursî","Muhâkemât","Yeni Asya Neşriyat"],[266,"Dinî eserler","İman ve tefekkür","Said Nursî","Sikke-i Tasdik-i Gaybî","Yeni Asya Neşriyat"],[267,"Dinî eserler","İman ve tefekkür","Said Nursî","Sözler","Yeni Asya Neşriyat"],[268,"Dinî eserler","İman ve tefekkür","Said Nursî","Şuâlar","Yeni Asya Neşriyat"],[269,"Dinî eserler","İman ve tefekkür","Said Nursî","Tarihçe-i Hayat","Yeni Asya Neşriyat"],[270,"Dinî eserler","Tasavvuf ve edebiyat","Sinan Yağmur","Aşkın Gözyaşları 1: Tebrizli Şems","Karatay Akademi"],[271,"Dinî eserler","Tasavvuf ve edebiyat","Sinan Yağmur","Mesnevi’den Hikâyeler",""],[272,"Dinî eserler","Kur’an ve meal","Suat Yıldırım","Kur’ân-ı Hakîm ve Açıklamalı Meali",""],[273,"Dinî eserler","Siyer ve sahabe","Talha Uğurluel","Hz. Muhammed’in Hayatı","Timaş Yayınları"],[274,"Dinî eserler","Dua ve ibadet","","Büyük Cevşen","Hakikat Kitabevi"],[275,"Dinî eserler","İlmihal","","Dinim İslâm: Temel Bilgiler",""],[276,"Dinî eserler","Dinler tarihi","","Dinler Kitabı","Alfa Yayınları"],[277,"Dinî eserler","Dua ve ibadet","","Dua ve Sure Ezber Kitabım",""],[278,"Dinî eserler","Kur’an / mushaf","","Kur’ân-ı Kerîm",""],[279,"Dinî eserler","","","Kurban",""],[280,"Dinî eserler","Dua ve ibadet","","Namaz Tesbihatı","Seda Yayınları"],[281,"Dinî eserler","","","Temel İslam Bilgileri — Ahlâkım",""],[282,"Dinî eserler","","","Temel İslam Bilgileri — İbadetim",""],[283,"Dinî eserler","","","Temel İslam Bilgileri — İnancım",""],[284,"Dinî eserler","","","Temel İslam Bilgileri — Peygamberim",""],[285,"Dünya klasikleri","Roman","Abdullah Kadirî","Ötgen Künler","İleri Yayınları"],[286,"Dünya klasikleri","Karbon cep kitapları","Aleksandr Sergeyeviç Puşkin","Yüzbaşının Kızı","Karbon Kitaplar"],[287,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Alexandre Dumas","Monte Cristo Kontu I","Türkiye İş Bankası Kültür Yayınları"],[288,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Alexandre Dumas","Monte Cristo Kontu II","Türkiye İş Bankası Kültür Yayınları"],[289,"Dünya klasikleri","Karbon cep kitapları","Alexandre Dumas","Monte Kristo Kontu (kısaltılmış metin)","Karbon Kitaplar"],[290,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Alexandre Dumas","Üç Silahşor","Türkiye İş Bankası Kültür Yayınları"],[291,"Dünya klasikleri","Roman","Amin Maalouf","Semerkant","Yapı Kredi Yayınları"],[292,"Dünya klasikleri","Karbon cep kitapları","Antoine de Saint-Exupéry","Gece Uçuşu","Karbon Kitaplar"],[293,"Dünya klasikleri","Karbon cep kitapları","Antoine de Saint-Exupéry","Küçük Prens","Karbon Kitaplar"],[294,"Dünya klasikleri","Karbon cep kitapları","Anton Çehov","Altıncı Koğuş","Karbon Kitaplar"],[295,"Dünya klasikleri","Karbon cep kitapları","Anton Çehov","Küçük Köpekli Kadın","Karbon Kitaplar"],[296,"Dünya klasikleri","Karbon cep kitapları","Anton Çehov","Üç Kız Kardeş","Karbon Kitaplar"],[297,"Dünya klasikleri","Karbon cep kitapları","Anton Çehov","Vanya Dayı","Karbon Kitaplar"],[298,"Dünya klasikleri","Karbon cep kitapları","Anton Çehov","Vişne Bahçesi","Karbon Kitaplar"],[299,"Dünya klasikleri","Hint masalları","Beydebâ","Kelile ve Dimne","İz Yayıncılık"],[300,"Dünya klasikleri","İş Bankası klasikleri","Carlo Collodi","Pinokyo","Türkiye İş Bankası Kültür Yayınları"],[301,"Dünya klasikleri","Karbon cep kitapları","Carlo Collodi","Pinokyo’nun Maceraları","Karbon Kitaplar"],[302,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Charles Dickens","Büyük Umutlar","Türkiye İş Bankası Kültür Yayınları"],[303,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Charles Dickens","David Copperfield","Türkiye İş Bankası Kültür Yayınları"],[304,"Dünya klasikleri","Can Yayınları cep kitapları","Charles Dickens","İki Şehrin Hikâyesi","Can Yayınları"],[305,"Dünya klasikleri","Can Yayınları","Charles Dickens","Oliver Twist","Can Yayınları"],[306,"Dünya klasikleri","Karbon cep kitapları","Christian Friedrich Hebbel","Gyges ve Yüzüğü","Karbon Kitaplar"],[307,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Daniel Defoe","Robinson Crusoe","Türkiye İş Bankası Kültür Yayınları"],[308,"Dünya klasikleri","Roman","Dante Alighieri","İlahi Komedya","Alfa Yayınları"],[309,"Dünya klasikleri","Öykü","Edgar Allan Poe","Bütün Hikâyeleri (tek cilt özel basım)","Ren Kitap"],[310,"Dünya klasikleri","Karbon cep kitapları","Edgar Allan Poe","Kara Kedi","Karbon Kitaplar"],[311,"Dünya klasikleri","Karbon cep kitapları","Edgar Allan Poe","Morgue Sokağı Cinayetleri","Karbon Kitaplar"],[312,"Dünya klasikleri","Çocuk klasiği","Edmondo de Amicis","Çocuk Kalbi",""],[313,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Émile Zola","Germinal","Türkiye İş Bankası Kültür Yayınları"],[314,"Dünya klasikleri","Can Yayınları","Émile Zola","Nasıl Ölünür","Can Yayınları"],[315,"Dünya klasikleri","Can Yayınları","Emily Brontë","Uğultulu Tepeler","Can Yayınları"],[316,"Dünya klasikleri","Roman","Erich Maria Remarque","Batı Cephesinde Yeni Bir Şey Yok",""],[317,"Dünya klasikleri","İş Bankası klasikleri","F. Scott Fitzgerald","Benjamin Button’ın Tuhaf Hikâyesi","Türkiye İş Bankası Kültür Yayınları"],[318,"Dünya klasikleri","Karbon cep kitapları","F. Scott Fitzgerald","Muhteşem Gatsby","Karbon Kitaplar"],[319,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fârâbî","İdeal Devlet","Türkiye İş Bankası Kültür Yayınları"],[320,"Dünya klasikleri","Çocuk edebiyatı","Ferenc Molnár","Pál Sokağı Çocukları","Yapı Kredi Yayınları"],[321,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Açlık Sanatçısı","Karbon Kitaplar"],[322,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Babaya Mektup","Karbon Kitaplar"],[323,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Bir Köy Hekimi","Karbon Kitaplar"],[324,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Bir Savaşın Tasviri","Karbon Kitaplar"],[325,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Dava","Karbon Kitaplar"],[326,"Dünya klasikleri","Can Yayınları cep kitapları","Franz Kafka","Dönüşüm","Can Yayınları"],[327,"Dünya klasikleri","Karbon cep kitapları","Franz Kafka","Dönüşüm","Karbon Kitaplar"],[328,"Dünya klasikleri","Mektuplar","Franz Kafka","Milena’ya Mektuplar",""],[329,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Friedrich Schiller","Wilhelm Tell","Türkiye İş Bankası Kültür Yayınları"],[330,"Dünya klasikleri","Can Yayınları","Fyodor Dostoyevski","Amcanın Düşü","Can Yayınları"],[331,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Budala","Türkiye İş Bankası Kültür Yayınları"],[332,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Ecinniler","Türkiye İş Bankası Kültür Yayınları"],[333,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Ezilenler","Türkiye İş Bankası Kültür Yayınları"],[334,"Dünya klasikleri","Karbon cep kitapları","Fyodor Dostoyevski","İnsancıklar","Karbon Kitaplar"],[335,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Karamazov Kardeşler","Türkiye İş Bankası Kültür Yayınları"],[336,"Dünya klasikleri","Karbon cep kitapları","Fyodor Dostoyevski","Kumarbaz","Karbon Kitaplar"],[337,"Dünya klasikleri","Roman","Fyodor Dostoyevski","Mutluluğun Kıyısında",""],[338,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Ölüler Evinden Anılar","Türkiye İş Bankası Kültür Yayınları"],[339,"Dünya klasikleri","Karbon cep kitapları","Fyodor Dostoyevski","Öteki","Karbon Kitaplar"],[340,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Stepançikovo Köyü","Türkiye İş Bankası Kültür Yayınları"],[341,"Dünya klasikleri","Can Yayınları cep kitapları","Fyodor Dostoyevski","Suç ve Ceza","Can Yayınları"],[342,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Fyodor Dostoyevski","Suç ve Ceza","Türkiye İş Bankası Kültür Yayınları"],[343,"Dünya klasikleri","Karbon cep kitapları","Fyodor Dostoyevski","Timsah","Karbon Kitaplar"],[344,"Dünya klasikleri","Can Yayınları cep kitapları","Fyodor Dostoyevski","Yeraltından Notlar","Can Yayınları"],[345,"Dünya klasikleri","Karbon cep kitapları","Fyodor Dostoyevski","Yeraltından Notlar","Karbon Kitaplar"],[346,"Dünya klasikleri","Roman","Gabriel García Márquez","Kırmızı Pazartesi",""],[347,"Dünya klasikleri","Can Yayınları cep kitapları","Gabriel García Márquez","Yüzyıllık Yalnızlık","Can Yayınları"],[348,"Dünya klasikleri","İtalyan edebiyatı","Giovanni Boccaccio","Decameron","Alfa Yayınları"],[349,"Dünya klasikleri","Karbon cep kitapları","Grigory Petrov","Beyaz Zambaklar Ülkesinde","Karbon Kitaplar"],[350,"Dünya klasikleri","Masallar / halk edebiyatı","Grimm Kardeşler","Grimm Masalları",""],[351,"Dünya klasikleri","İş Bankası klasikleri","Halil Cibran","Ermiş","Türkiye İş Bankası Kültür Yayınları"],[352,"Dünya klasikleri","Roman","Harper Lee","Bülbülü Öldürmek","Sel Yayıncılık"],[353,"Dünya klasikleri","Karbon cep kitapları","Herman Melville","Kâtip Bartleby","Karbon Kitaplar"],[354,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Herman Melville","Kâtip Bartleby","Türkiye İş Bankası Kültür Yayınları"],[355,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Homeros","İlyada","Türkiye İş Bankası Kültür Yayınları"],[356,"Dünya klasikleri","Can Yayınları","Honoré de Balzac","Eugénie Grandet","Can Yayınları"],[357,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Honoré de Balzac","Goriot Baba","Türkiye İş Bankası Kültür Yayınları"],[358,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Honoré de Balzac","Vadideki Zambak","Türkiye İş Bankası Kültür Yayınları"],[359,"Dünya klasikleri","Can Yayınları","Howard Pyle","Robin Hood","Can Yayınları"],[360,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","İvan Gonçarov","Oblomov","Türkiye İş Bankası Kültür Yayınları"],[361,"Dünya klasikleri","Roman","İvan Turgenyev","Babalar ve Oğullar",""],[362,"Dünya klasikleri","Karbon cep kitapları","J. M. Barrie","Peter Pan","Karbon Kitaplar"],[363,"Dünya klasikleri","İş Bankası klasikleri","J. M. Barrie","Peter Pan","Türkiye İş Bankası Kültür Yayınları"],[364,"Dünya klasikleri","İş Bankası klasikleri","Jack London","Ateş Yakmak","Türkiye İş Bankası Kültür Yayınları"],[365,"Dünya klasikleri","Can Yayınları cep kitapları","Jack London","Beyaz Diş","Can Yayınları"],[366,"Dünya klasikleri","Karbon cep kitapları","Jack London","Beyaz Diş","Karbon Kitaplar"],[367,"Dünya klasikleri","Çocuk klasikleri","Jack London","Bir Kuzey Macerası","Türkiye İş Bankası Kültür Yayınları"],[368,"Dünya klasikleri","İş Bankası klasikleri","Jack London","Deniz Kurdu","Türkiye İş Bankası Kültür Yayınları"],[369,"Dünya klasikleri","İş Bankası klasikleri","Jack London","Kızıl Veba","Türkiye İş Bankası Kültür Yayınları"],[370,"Dünya klasikleri","İş Bankası klasikleri","Jack London","Martin Eden","Türkiye İş Bankası Kültür Yayınları"],[371,"Dünya klasikleri","Karbon cep kitapları","Jack London","Vahşetin Çağrısı","Karbon Kitaplar"],[372,"Dünya klasikleri","İş Bankası klasikleri","Jack London","Yıldız Gezgini","Türkiye İş Bankası Kültür Yayınları"],[373,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Jane Austen","Gurur ve Önyargı","Türkiye İş Bankası Kültür Yayınları"],[374,"Dünya klasikleri","Roman","Johann Wolfgang von Goethe","Faust",""],[375,"Dünya klasikleri","Can Yayınları cep kitapları","Johann Wolfgang von Goethe","Genç Werther’in Acıları","Can Yayınları"],[376,"Dünya klasikleri","Karbon cep kitapları","Johann Wolfgang von Goethe","Genç Werther’in Acıları","Karbon Kitaplar"],[377,"Dünya klasikleri","Çocuk klasiği","Johanna Spyri","Heidi",""],[378,"Dünya klasikleri","Karbon cep kitapları","Johanna Spyri","Heidi","Karbon Kitaplar"],[379,"Dünya klasikleri","Roman","John Milton","Yitirilen Cennet","İthaki Yayınları"],[380,"Dünya klasikleri","Roman","John Steinbeck","Cennetin Doğusu",""],[381,"Dünya klasikleri","Roman / anlatı","John Steinbeck","Fareler ve İnsanlar","Remzi Kitabevi"],[382,"Dünya klasikleri","Roman / anlatı","John Steinbeck","Gazap Üzümleri","Remzi Kitabevi"],[383,"Dünya klasikleri","Roman","John Steinbeck","İnci",""],[384,"Dünya klasikleri","İş Bankası klasikleri","Jules Verne","Buzullar Arasında Bir Kış","Türkiye İş Bankası Kültür Yayınları"],[385,"Dünya klasikleri","Roman","Jules Verne","Karpatlar Şatosu","Alfa Yayınları"],[386,"Dünya klasikleri","İş Bankası klasikleri","Jules Verne","Zacharius Usta","Türkiye İş Bankası Kültür Yayınları"],[387,"Dünya klasikleri","Karbon cep kitapları","Kleist–Chamisso–Hoffmann","Üç Romantik Hikâye","Karbon Kitaplar"],[388,"Dünya klasikleri","Çocuk edebiyatı","L. Frank Baum","Oz Büyücüsü","Türkiye İş Bankası Kültür Yayınları"],[389,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","Anna Karenina","Türkiye İş Bankası Kültür Yayınları"],[390,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","Diriliş","Türkiye İş Bankası Kültür Yayınları"],[391,"Dünya klasikleri","Karbon cep kitapları","Lev Tolstoy","Efendi ile Uşağı","Karbon Kitaplar"],[392,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","Hacı Murat","Türkiye İş Bankası Kültür Yayınları"],[393,"Dünya klasikleri","Roman","Lev Tolstoy","Hayatın Anlamı",""],[394,"Dünya klasikleri","","Lev Tolstoy","İnsan Ne ile Yaşar",""],[395,"Dünya klasikleri","Karbon cep kitapları","Lev Tolstoy","İnsan Ne ile Yaşar","Karbon Kitaplar"],[396,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","İnsan Neyle Yaşar?","Türkiye İş Bankası Kültür Yayınları"],[397,"Dünya klasikleri","Karbon cep kitapları","Lev Tolstoy","İvan İlyiç’in Ölümü","Karbon Kitaplar"],[398,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","Savaş ve Barış I","Türkiye İş Bankası Kültür Yayınları"],[399,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Lev Tolstoy","Savaş ve Barış II","Türkiye İş Bankası Kültür Yayınları"],[400,"Dünya klasikleri","Karbon cep kitapları","Lewis Carroll","Alice Harikalar Diyarında","Karbon Kitaplar"],[401,"Dünya klasikleri","İş Bankası klasikleri","Lewis Carroll","Alice Harikalar Diyarında","Türkiye İş Bankası Kültür Yayınları"],[402,"Dünya klasikleri","Roman","Mark Twain","Ahmak Wilson’ın Trajedisi","İş Bankası Kültür Yayınları"],[403,"Dünya klasikleri","Roman / anlatı","Mark Twain","Huckleberry Finn’in Maceraları","Türkiye İş Bankası Kültür Yayınları"],[404,"Dünya klasikleri","Karbon cep kitapları","Mark Twain","Tom Sawyer’in Maceraları","Karbon Kitaplar"],[405,"Dünya klasikleri","Can Yayınları","Marquis de Sade","Aşkın Suçları","Can Yayınları"],[406,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Mary Shelley","Frankenstein ya da Modern Prometheus","Türkiye İş Bankası Kültür Yayınları"],[407,"Dünya klasikleri","Çocuk edebiyatı","Michael Ende","Momo",""],[408,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Michel de Montaigne","Denemeler","Türkiye İş Bankası Kültür Yayınları"],[409,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","1. Pardayanlar","Dedalus Kitap"],[410,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","10. Fausta’nın Sonu","Dedalus Kitap"],[411,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","2. Pardayan’ın Aşkı","Dedalus Kitap"],[412,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","3. Fausta","Dedalus Kitap"],[413,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","4. Fausta’nın Yenilgisi","Dedalus Kitap"],[414,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","5. Pardayan ve Fausta","Dedalus Kitap"],[415,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","6. Chico’nun Aşkı","Dedalus Kitap"],[416,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","7. Pardayan’ın Oğlu","Dedalus Kitap"],[417,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","8. Pardayan’ın Milyonları","Dedalus Kitap"],[418,"Dünya klasikleri","Pardayanlar dizisi","Michel Zévaco","9. Pardayan’ın Kızı","Dedalus Kitap"],[419,"Dünya klasikleri","Çocuk klasikleri","Miguel de Cervantes","Don Kişot","Yapı Kredi Yayınları"],[420,"Dünya klasikleri","","Miguel de Cervantes Saavedra","Don Quijote — I. Cilt","Yapı Kredi Yayınları"],[421,"Dünya klasikleri","","Miguel de Cervantes Saavedra","Don Quijote — II. Cilt","Yapı Kredi Yayınları"],[422,"Dünya klasikleri","Can Yayınları","Mihail Lermontov","Zamanımızın Bir Kahramanı","Can Yayınları"],[423,"Dünya klasikleri","","Mihail Şolohov","Durgun Don — 1. Cilt","Dedalus Kitap"],[424,"Dünya klasikleri","","Mihail Şolohov","Durgun Don — 2. Cilt","Dedalus Kitap"],[425,"Dünya klasikleri","","Mihail Şolohov","Durgun Don — 3. Cilt","Dedalus Kitap"],[426,"Dünya klasikleri","","Mihail Şolohov","Durgun Don — 4. Cilt","Dedalus Kitap"],[427,"Dünya klasikleri","Karbon cep kitapları","Molière","Cimri","Karbon Kitaplar"],[428,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Molière","Cimri","Türkiye İş Bankası Kültür Yayınları"],[429,"Dünya klasikleri","Karbon cep kitapları","Niccolò Machiavelli","Prens","Karbon Kitaplar"],[430,"Dünya klasikleri","Karbon cep kitapları","Nikolay Gogol","Burun","Karbon Kitaplar"],[431,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Nikolay Gogol","Ölü Canlar","Türkiye İş Bankası Kültür Yayınları"],[432,"Dünya klasikleri","Can Yayınları cep kitapları","Nikos Kazancakis","Zorba","Can Yayınları"],[433,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Nizâmülmülk","Siyasetnâme","Türkiye İş Bankası Kültür Yayınları"],[434,"Dünya klasikleri","Can Yayınları cep kitapları","Oscar Wilde","Dorian Gray’in Portresi","Can Yayınları"],[435,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Oscar Wilde","Dorian Gray’in Portresi","Türkiye İş Bankası Kültür Yayınları"],[436,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Ömer Hayyam","Dörtlükler / Rubâîler","Türkiye İş Bankası Kültür Yayınları"],[437,"Dünya klasikleri","Can Yayınları cep kitapları","Patrick Süskind","Koku","Can Yayınları"],[438,"Dünya klasikleri","Karbon cep kitapları","Paul Lafargue","Tembellik Hakkı","Karbon Kitaplar"],[439,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Platon","Devlet","Türkiye İş Bankası Kültür Yayınları"],[440,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Platon","Sokrates’in Savunması","Türkiye İş Bankası Kültür Yayınları"],[441,"Dünya klasikleri","Fars edebiyatı","Sâdî-i Şîrâzî","Bostan ve Gülistan","Beyan Yayınları"],[442,"Dünya klasikleri","Karbon cep kitapları","Sophokles","Antigone","Karbon Kitaplar"],[443,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Amok Koşucusu","Karbon Kitaplar"],[444,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Ay Işığı Sokağı","Karbon Kitaplar"],[445,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Bilinmeyen Bir Kadının Mektubu","Karbon Kitaplar"],[446,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Bir Kadının Hayatından Yirmi Dört Saat","Karbon Kitaplar"],[447,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Bir Zanaata Beklenmedik Karşılaşma","Türkiye İş Bankası Kültür Yayınları"],[448,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Clarissa","Türkiye İş Bankası Kültür Yayınları"],[449,"Dünya klasikleri","Can Yayınları","Stefan Zweig","Dünün Dünyası","Can Yayınları"],[450,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Gömülü Şamdan","Türkiye İş Bankası Kültür Yayınları"],[451,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Hayatın Mucizeleri","Türkiye İş Bankası Kültür Yayınları"],[452,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","İnsanlığın Yıldızının Yükseldiği Anlar","Türkiye İş Bankası Kültür Yayınları"],[453,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Korku","Karbon Kitaplar"],[454,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Lyon’da Düğün","Türkiye İş Bankası Kültür Yayınları"],[455,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Mecburiyet","Türkiye İş Bankası Kültür Yayınları"],[456,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Olağanüstü Bir Gece","Karbon Kitaplar"],[457,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Olağanüstü Bir Gece","Türkiye İş Bankası Kültür Yayınları"],[458,"Dünya klasikleri","Can Yayınları","Stefan Zweig","Sabırsız Yürek","Can Yayınları"],[459,"Dünya klasikleri","Can Yayınları cep kitapları","Stefan Zweig","Satranç","Can Yayınları"],[460,"Dünya klasikleri","Karbon cep kitapları","Stefan Zweig","Satranç","Karbon Kitaplar"],[461,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Üç Büyük Usta","Türkiye İş Bankası Kültür Yayınları"],[462,"Dünya klasikleri","İş Bankası klasikleri","Stefan Zweig","Yakıcı Sır","Türkiye İş Bankası Kültür Yayınları"],[463,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Stendhal","Kırmızı ve Siyah","Türkiye İş Bankası Kültür Yayınları"],[464,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Sun Zi (Sun Tzu)","Savaş Sanatı","Türkiye İş Bankası Kültür Yayınları"],[465,"Dünya klasikleri","Karbon cep kitapları","Victor Hugo","Bir İdam Mahkûmunun Son Günü","Karbon Kitaplar"],[466,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Victor Hugo","Bir İdam Mahkûmunun Son Günü","Türkiye İş Bankası Kültür Yayınları"],[467,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Victor Hugo","Notre Dame’ın Kamburu","Türkiye İş Bankası Kültür Yayınları"],[468,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Victor Hugo","Sefiller I","Türkiye İş Bankası Kültür Yayınları"],[469,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","Victor Hugo","Sefiller II","Türkiye İş Bankası Kültür Yayınları"],[470,"Dünya klasikleri","Karbon cep kitapları","Virginia Woolf","Deniz Feneri","Karbon Kitaplar"],[471,"Dünya klasikleri","Karbon cep kitapları","Virginia Woolf","Kendine Ait Bir Oda","Karbon Kitaplar"],[472,"Dünya klasikleri","Roman","Vladimir Bartol","Alamut",""],[473,"Dünya klasikleri","Karbon cep kitapları","Voltaire","Candide","Karbon Kitaplar"],[474,"Dünya klasikleri","Can Yayınları","Wilkie Collins","Beyazlı Kadın","Can Yayınları"],[475,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","William Shakespeare","Fırtına","Türkiye İş Bankası Kültür Yayınları"],[476,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","William Shakespeare","Romeo ve Juliet","Türkiye İş Bankası Kültür Yayınları"],[477,"Dünya klasikleri","Karbon cep kitapları","William Shakespeare","Soneler","Karbon Kitaplar"],[478,"Dünya klasikleri","Masallar / halk edebiyatı","","Binbir Gece Masalları — 1","Alfa Yayınları"],[479,"Dünya klasikleri","Masallar / halk edebiyatı","","Binbir Gece Masalları — 2","Alfa Yayınları"],[480,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","","Dede Korkut Hikâyeleri","Türkiye İş Bankası Kültür Yayınları"],[481,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","","Gilgamış Destanı","Türkiye İş Bankası Kültür Yayınları"],[482,"Dünya klasikleri","Hasan Âli Yücel Klasikler Dizisi","","Gilgâmış Hikâyeleri","Türkiye İş Bankası Kültür Yayınları"],[483,"Eğitim","Öğretmenlik","Halit Ertuğrul","Örnek Öğretmen",""],[484,"Fantastik","","Andrzej Sapkowski","Ateşle İmtihan","Pegasus Yayınları"],[485,"Fantastik","","Andrzej Sapkowski","Elflerin Kanı","Pegasus Yayınları"],[486,"Fantastik","","Andrzej Sapkowski","Gölün Hanımı","Pegasus Yayınları"],[487,"Fantastik","","Andrzej Sapkowski","Kader Kılıcı","Pegasus Yayınları"],[488,"Fantastik","","Andrzej Sapkowski","Kırlangıç Kulesi","Pegasus Yayınları"],[489,"Fantastik","","Andrzej Sapkowski","Nefret Çağı","Pegasus Yayınları"],[490,"Fantastik","","Andrzej Sapkowski","Son Dilek","Pegasus Yayınları"],[491,"Fantastik","","George R. R. Martin","Ejderhaların Dansı — Kısım 1","Epsilon Yayınevi (set eşleştirmesi)"],[492,"Fantastik","","George R. R. Martin","Ejderhaların Dansı — Kısım 2","Epsilon Yayınevi (set eşleştirmesi)"],[493,"Fantastik","","George R. R. Martin","Kargaların Ziyafeti — Kısım 1","Epsilon Yayınevi (set eşleştirmesi)"],[494,"Fantastik","","George R. R. Martin","Kargaların Ziyafeti — Kısım 2","Epsilon Yayınevi (set eşleştirmesi)"],[495,"Fantastik","","George R. R. Martin","Kılıçların Fırtınası — Kısım 1","Epsilon Yayınevi (set eşleştirmesi)"],[496,"Fantastik","","George R. R. Martin","Kılıçların Fırtınası — Kısım 2","Epsilon Yayınevi (set eşleştirmesi)"],[497,"Fantastik","","George R. R. Martin","Kralların Çarpışması — Kısım 1","Epsilon Yayınevi (set eşleştirmesi)"],[498,"Fantastik","","George R. R. Martin","Kralların Çarpışması — Kısım 2","Epsilon Yayınevi (set eşleştirmesi)"],[499,"Fantastik","","George R. R. Martin","Taht Oyunları","Epsilon Yayınevi (set eşleştirmesi)"],[500,"Fantastik","","J. K. Rowling","Harry Potter ve Ateş Kadehi","Yapı Kredi Yayınları"],[501,"Fantastik","Harry Potter resimli özel baskı","J. K. Rowling","Harry Potter ve Ateş Kadehi — 4 (resimli özel baskı)","Yapı Kredi Yayınları"],[502,"Fantastik","","J. K. Rowling","Harry Potter ve Azkaban Tutsağı","Yapı Kredi Yayınları"],[503,"Fantastik","Harry Potter resimli özel baskı","J. K. Rowling","Harry Potter ve Azkaban Tutsağı — 3 (resimli özel baskı)","Yapı Kredi Yayınları"],[504,"Fantastik","","J. K. Rowling","Harry Potter ve Felsefe Taşı","Yapı Kredi Yayınları"],[505,"Fantastik","Harry Potter resimli özel baskı","J. K. Rowling","Harry Potter ve Felsefe Taşı — 1 (resimli özel baskı)","Yapı Kredi Yayınları"],[506,"Fantastik","","J. K. Rowling","Harry Potter ve Melez Prens","Yapı Kredi Yayınları"],[507,"Fantastik","","J. K. Rowling","Harry Potter ve Ölüm Yadigârları","Yapı Kredi Yayınları"],[508,"Fantastik","","J. K. Rowling","Harry Potter ve Sırlar Odası","Yapı Kredi Yayınları"],[509,"Fantastik","Harry Potter resimli özel baskı","J. K. Rowling","Harry Potter ve Sırlar Odası — 2 (resimli özel baskı)","Yapı Kredi Yayınları"],[510,"Fantastik","","J. K. Rowling","Harry Potter ve Zümrüdüanka Yoldaşlığı","Yapı Kredi Yayınları"],[511,"Fantastik","Harry Potter resimli özel baskı","J. K. Rowling","Harry Potter ve Zümrüdüanka Yoldaşlığı — 5 (resimli özel baskı)","Yapı Kredi Yayınları"],[512,"Fantastik","Tolkien Mirası · beş kitaplık kutulu set","J. R. R. Tolkien","Büyük Wootton Demircisi","İthaki Yayınları"],[513,"Fantastik","Tolkien Mirası · beş kitaplık kutulu set","J. R. R. Tolkien","Ham’li Çiftçi Giles","İthaki Yayınları"],[514,"Fantastik","Tolkien Mirası · beş kitaplık kutulu set","J. R. R. Tolkien","Hobbit","İthaki Yayınları"],[515,"Fantastik","Tolkien Mirası · beş kitaplık kutulu set","J. R. R. Tolkien","Roverandom","İthaki Yayınları"],[516,"Fantastik","Tolkien Mirası · beş kitaplık kutulu set","J. R. R. Tolkien","Tom Bombadil’in Maceraları","İthaki Yayınları"],[517,"Fantastik","Roman","J. R. R. Tolkien","Yüzüklerin Efendisi — Tek Cilt Özel Basım",""],[518,"Fantastik","","Leigh Bardugo","Wonder Woman: Savaşgetiren","Pegasus Yayınları"],[519,"Fantastik","","Marie Lu","Batman: Gece Gezen","Pegasus Yayınları"],[520,"Fantastik","","Matt de la Peña","Superman: Şafak Söktüren","Pegasus Yayınları"],[521,"Fantastik","","Sarah J. Maas","Catwoman: Ruhçalan","Pegasus Yayınları"],[522,"Fantastik","Alacakaranlık dizisi","Stephenie Meyer","Tutulma",""],[523,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","Atuan Mezarları","Metis Yayınları"],[524,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","En Uzak Sahil","Metis Yayınları"],[525,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","Öteki Rüzgâr","Metis Yayınları"],[526,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","Tehanu","Metis Yayınları"],[527,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","Yerdeniz Büyücüsü","Metis Yayınları"],[528,"Fantastik","Yerdeniz dizisi","Ursula K. Le Guin","Yerdeniz Öyküleri","Metis Yayınları"],[529,"Gerilim ve polisiye","Polisiye","Agatha Christie","Doğu Ekspresinde Cinayet","Altın Kitaplar"],[530,"Gerilim ve polisiye","Polisiye","Agatha Christie","On Kişiydiler","Altın Kitaplar"],[531,"Gerilim ve polisiye","Karbon cep kitapları","Arthur Conan Doyle","Sherlock Holmes – Kızıl Dosya","Karbon Kitaplar"],[532,"Gerilim ve polisiye","İngiliz edebiyatı","Arthur Conan Doyle","Sherlock Holmes: Bütün Hikâyeleri (tek cilt özel basım)","Ren Kitap"],[533,"Gerilim ve polisiye","İngiliz edebiyatı","Arthur Conan Doyle","Sherlock Holmes: Bütün Romanlar (tek cilt özel basım)","Ren Kitap"],[534,"Gerilim ve polisiye","Gizem romanı","Dan Brown","Başlangıç","Altın Kitaplar"],[535,"Gerilim ve polisiye","Gizem romanı","Dan Brown","Cehennem","Altın Kitaplar"],[536,"Gerilim ve polisiye","Gizem romanı","Dan Brown","Da Vinci Şifresi","Altın Kitaplar"],[537,"Gerilim ve polisiye","Gizem romanı","Dan Brown","Kayıp Sembol","Altın Kitaplar"],[538,"Gerilim ve polisiye","Gizem romanı","Dan Brown","Melekler ve Şeytanlar","Altın Kitaplar"],[539,"Gerilim ve polisiye","","David Lagercrantz","Göze Göz Dişe Diş Diyen Kız","Pegasus Yayınları"],[540,"Gerilim ve polisiye","","David Lagercrantz","Ölmesi Gereken Kız","Pegasus Yayınları"],[541,"Gerilim ve polisiye","","David Lagercrantz","Örümcek Ağındaki Kız","Pegasus Yayınları"],[542,"Gerilim ve polisiye","Polisiye","Jean-Christophe Grangé","Kızıl Nehirler",""],[543,"Gerilim ve polisiye","Polisiye","Jean-Christophe Grangé","Leyleklerin Uçuşu",""],[544,"Gerilim ve polisiye","Roman","John Verdon","Gözlerini Sımsıkı Kapat","Koridor Yayıncılık"],[545,"Gerilim ve polisiye","Roman","John Verdon","Peter Pan Ölmeli","Koridor Yayıncılık"],[546,"Gerilim ve polisiye","Roman","Stephen King","22/11/63","Altın Kitaplar"],[547,"Gerilim ve polisiye","Roman","Stephen King","Kuşku Mevsimi ve Esaretin Bedeli","Altın Kitaplar"],[548,"Gerilim ve polisiye","Roman","Stephen King","Yeşil Yol","Altın Kitaplar"],[549,"Gerilim ve polisiye","","Stieg Larsson","Arı Kovanına Çomak Sokan Kız","Pegasus Yayınları"],[550,"Gerilim ve polisiye","","Stieg Larsson","Ateşle Oynayan Kız","Pegasus Yayınları"],[551,"Gerilim ve polisiye","","Stieg Larsson","Ejderha Dövmeli Kız","Pegasus Yayınları"],[552,"Gerilim ve polisiye","","Wulf Dorn","Fobi","Pegasus Yayınları"],[553,"Gerilim ve polisiye","","Wulf Dorn","Hain Yüreğim","Pegasus Yayınları"],[554,"Gerilim ve polisiye","","Wulf Dorn","Karabasan","Pegasus Yayınları"],[555,"Gerilim ve polisiye","","Wulf Dorn","Oyunbaz","Pegasus Yayınları"],[556,"Gerilim ve polisiye","","Wulf Dorn","Psikiyatrist","Pegasus Yayınları"],[557,"Gerilim ve polisiye","","Wulf Dorn","Şizofren","Pegasus Yayınları"],[558,"Gerilim ve polisiye","","Wulf Dorn","Travma","Pegasus Yayınları"],[559,"Gezi ve turizm","Tur planlama","A. Özdal Değirmencioğlu (ed.)","Örneklerle Tur Planlaması ve Yönetimi 1","Detay Yayıncılık"],[560,"Gezi ve turizm","Turist rehberliği","Ali Türker; Gökhan Köksal (ed.)","Turist Rehberleri İçin Şehir Turu Rehberi","Detay Yayıncılık"],[561,"Gezi ve turizm","Türkiye rehberi","Bülent Demirdurak","Türkiye Hakkında Çok Şey",""],[562,"Gezi ve turizm","Türkiye coğrafyası","Emrullah Güney; Umur Güney","Türkiye Coğrafyasının Uygarlıkları","Nobel Akademik Yayıncılık"],[563,"Gezi ve turizm","Turist rehberliği","Ertuğrul Düzgün (ed.)","Örnek Olaylarla Turist Rehberliği","Detay Yayıncılık"],[564,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 1. Kitap, 1. Cilt",""],[565,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 1. Kitap, 2. Cilt",""],[566,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 10. Kitap, 1. Cilt",""],[567,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 10. Kitap, 2. Cilt",""],[568,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 2. Kitap, 1. Cilt",""],[569,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 2. Kitap, 2. Cilt",""],[570,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 3. Kitap, 1. Cilt",""],[571,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 3. Kitap, 2. Cilt",""],[572,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 4. Kitap, 1. Cilt",""],[573,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 4. Kitap, 2. Cilt",""],[574,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 5. Kitap, 1. Cilt",""],[575,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 5. Kitap, 2. Cilt",""],[576,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 6. Kitap, 1. Cilt",""],[577,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 6. Kitap, 2. Cilt",""],[578,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 7. Kitap, 1. Cilt",""],[579,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 7. Kitap, 2. Cilt",""],[580,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 8. Kitap, 1. Cilt",""],[581,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 8. Kitap, 2. Cilt",""],[582,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 9. Kitap, 1. Cilt",""],[583,"Gezi ve turizm","","Evliyâ Çelebi","Seyahatnâme — 9. Kitap, 2. Cilt",""],[584,"Gezi ve turizm","Müzeler","Hande Akyurt Kurnaz (ed.)","Turist Rehberliğine Yönelik 7 Bölge Müzeler","Detay Yayıncılık"],[585,"Gezi ve turizm","Türkiye coğrafyası","Mehmet Gürdal","Türkiye Turizm Coğrafyası: Profesyonel Turist Rehberi ve Gezi Kılavuzu","Nobel Akademik Yayıncılık"],[586,"Gezi ve turizm","Turist rehberliği","Osman Eralp Çolakoğlu; Fehmi Ependi; Fatih Epik","Tur Yönetimi ve Turist Rehberliği","Detay Yayıncılık"],[587,"Gezi ve turizm","Turist rehberliği","Özlem Güzel; Özlem Köroğlu (ed.)","Turist Rehberliğinde Uzmanlaşma","Nobel Akademik Yayıncılık"],[588,"Gezi ve turizm","Gezi rotaları","Saffet Emre Tonguç","Ayrıcalıklı Rotalar: Türkiye","E Kitap"],[589,"Gezi ve turizm","Turist rehberliği","Seçkin Eser; Seda Şahin; A. Celil Çakıcı (ed.)","Turist Rehberliği","Detay Yayıncılık"],[590,"Gezi ve turizm","Türkiye rehberi","Şerif Yenen","Anadolu Destanı: Türkiye’nin Kültürel Mirası ve Gezi Rehberi","Alfa Yayınları"],[591,"Gezi ve turizm","Antik kentler","Tolga Fahri Çakmak (ed.)","Anadolu’da Antik Kentler ve Merkezler","Detay Yayıncılık"],[592,"Gezi ve turizm","Turist rehberliği","","Turist Rehberliğine Giriş","Detay Yayıncılık"],[593,"Hayvanlar","Doğa","Brigitte Strawbridge Howard","Arılarla Dans",""],[594,"Hayvanlar","Doğa","Bülent Gözcelioğlu","Anadolu Doğasından Yansımalar",""],[595,"Hayvanlar","Hayvan davranışı","James L. Gould; Carol Grant Gould","Hayvan Zihni",""],[596,"Hayvanlar","Doğa","Karsten Brensing","Hayvanların Gizemi",""],[597,"Hayvanlar","Doğa","Lucy Cooke","Hayvanlar Âleminden Uygunsuz Gerçekler",""],[598,"Hayvanlar","Doğa","Marian Stamp Dawkins","Hayvanların Sessiz Dünyası",""],[599,"Hayvanlar","Doğa","Peter Wohlleben","Hayvanların Gizli Yaşamı",""],[600,"Hayvanlar","Doğa","Philippe J. Dubois; Élise Rousseau","Kuşların Felsefesi",""],[601,"Hayvanlar","Doğa","Rosamund Young","İneklerin Gizli Hayatı",""],[602,"Hayvanlar","Doğa","Thor Hanson","Arıların Bildikleri","Metis Yayınları"],[603,"Hayvanlar","Zooloji","Ziraat Yüksek Mühendisi Necdet Ergün","Hayvanlar Alemi: Zoookontest",""],[604,"Hobi","Satranç","Ahmet Bilal Yaprakdal","İki Hamlede Mat 2",""],[605,"Hobi","Satranç","Ahmet Bilal Yaprakdal","Tek Hamlede Mat 1",""],[606,"Hobi","Satranç","Olgun Kulaç","Başlangıç Düzeyi Satranç Kaynak Kitabı",""],[607,"Hobi","Satranç","Olgun Kulaç","Orta Düzey Satranç Kaynak Kitabı",""],[608,"Hobi","Satranç","Peter Kurzdorfer","Her Yönüyle Satranç",""],[609,"Hobi","Satranç","Selim Palavan","Satranç Kitabım","İnkılâp Kitabevi"],[610,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Açılışlar",""],[611,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Harika Oyunlar",""],[612,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Kombinezonlar",""],[613,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Oyun Felsefesi",""],[614,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Oyunsonları",""],[615,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Stratejiler",""],[616,"Hobi","Satranç","Yasser Seirawan","Satrançta Kazandıran Taktikler",""],[617,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","Barınak İnşası — Hayatta Kalma Becerileri El Kitabı 7","Genç Timaş"],[618,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","Doğa Yürüyüşü — Hayatta Kalma Becerileri El Kitabı 9","Genç Timaş"],[619,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","Düğümler — Hayatta Kalma Becerileri El Kitabı 4","Genç Timaş"],[620,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","Haritalar ve Yön Bulma — Hayatta Kalma Becerileri El Kitabı 12","Genç Timaş"],[621,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","Hava Gözlem — Hayatta Kalma Becerileri El Kitabı 10","Genç Timaş"],[622,"Kamp ve hayatta kalma","Hayatta kalma","Bear Grylls","Hayatta Kalma Kılavuzu",""],[623,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","İlk Yardım — Hayatta Kalma Becerileri El Kitabı 3","Genç Timaş"],[624,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","İşaretleşme — Hayatta Kalma Becerileri El Kitabı 5","Genç Timaş"],[625,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","İz Sürme — Hayatta Kalma Becerileri El Kitabı 8","Genç Timaş"],[626,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","Kampçılık — Hayatta Kalma Becerileri El Kitabı 6","Genç Timaş"],[627,"Kamp ve hayatta kalma","Doğa Rotası — Set 2","Bear Grylls","Tehlikeler ve Acil Durumlar — Hayatta Kalma Becerileri El Kitabı 11","Genç Timaş"],[628,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","Tehlikeli Bitkiler — Hayatta Kalma Becerileri El Kitabı 2","Genç Timaş"],[629,"Kamp ve hayatta kalma","Kamp Rotası — Set 1","Bear Grylls","Tehlikeli Hayvanlar — Hayatta Kalma Becerileri El Kitabı 1","Genç Timaş"],[630,"Kamp ve hayatta kalma","Hayatta kalma","Dave Canterbury","Bushcraft 101",""],[631,"Kamp ve hayatta kalma","Hayatta kalma","Frances Ashcroft","Yaşamın Kıyısında",""],[632,"Kamp ve hayatta kalma","Doğa","Jon Krakauer","Yabana Doğru","Siren Yayınları"],[633,"Kamp ve hayatta kalma","Hayatta kalma","Okan Okumuş","Gezginin El Rehberi: Yaşasın Sırt Çantası",""],[634,"Kamp ve hayatta kalma","Doğa","Tristan Gooley","Doğanın İşaretlerini Okumanın Kaybolmuş Sanatı","Destek Yayınları"],[635,"Kamp ve hayatta kalma","Hayatta kalma","","Çangılda Hayatta Kalma Rehberi",""],[636,"Kamp ve hayatta kalma","Kamp alanları","","Doğada Tatil: 75 Kamp Alanı","Atlas"],[637,"Kamp ve hayatta kalma","Hayatta kalma","","Hayatta Kalma Kılavuzu",""],[638,"Kamp ve hayatta kalma","Hayatta kalma","","Kutuplarda Hayatta Kalma Rehberi",""],[639,"Modern klasikler","Can Yayınları","Albert Camus","Yabancı","Can Yayınları"],[640,"Modern klasikler","İş Bankası klasikleri","Anthony Burgess","Otomatik Portakal","Türkiye İş Bankası Kültür Yayınları"],[641,"Modern klasikler","Roman / anlatı","Arthur Schopenhauer","İnsan Doğası Üzerine",""],[642,"Modern klasikler","Roman","Ayn Rand","Hayatın Kaynağı","Pegasus Yayınları"],[643,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Beyaz Gemi","Ötüken Neşriyat"],[644,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Cemile","Ötüken Neşriyat"],[645,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Dişi Kurdun Rüyaları","Ötüken Neşriyat"],[646,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Elveda Gülsarı","Ötüken Neşriyat"],[647,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Gün Olur Asra Bedel","Ötüken Neşriyat"],[648,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","İlk Öğretmenim","Ötüken Neşriyat"],[649,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Selvi Boylum Al Yazmalım",""],[650,"Modern klasikler","Roman / anlatı","Cengiz Aytmatov","Toprak Ana","Ötüken Neşriyat"],[651,"Modern klasikler","İş Bankası klasikleri","Charlotte Perkins Gilman","Kadınlar Ülkesi","Türkiye İş Bankası Kültür Yayınları"],[652,"Modern klasikler","Roman / anlatı","Christy Brown","Sol Ayağım","Arion Yayınevi"],[653,"Modern klasikler","Roman / anlatı","Dino Buzzati","Tatar Çölü","İletişim Yayınları"],[654,"Modern klasikler","Roman / anlatı","Ernest Hemingway","Çanlar Kimin İçin Çalıyor","Bilgi Yayınevi"],[655,"Modern klasikler","Roman / anlatı","Ernest Hemingway","Yaşlı Adam ve Deniz","Bilgi Yayınevi"],[656,"Modern klasikler","Can Yayınları","Fernando Pessoa","Huzursuzluğun Kitabı","Can Yayınları"],[657,"Modern klasikler","","George Orwell","1984","Can Yayınları"],[658,"Modern klasikler","Roman","George Orwell","Boğulmamak İçin",""],[659,"Modern klasikler","","George Orwell","Hayvan Çiftliği","Can Yayınları"],[660,"Modern klasikler","Roman / anlatı","Georges Perec","Uyuyan Adam","Metis Yayınları"],[661,"Modern klasikler","İş Bankası klasikleri","Giovanni Papini","Gog","Türkiye İş Bankası Kültür Yayınları"],[662,"Modern klasikler","Roman / anlatı","Gregory Petrov","Beyaz Zambaklar Ülkesinde","Karma Kitap"],[663,"Modern klasikler","Roman / anlatı","Heinrich Böll","Palyaço","Can Yayınları"],[664,"Modern klasikler","Roman / anlatı","Irvin D. Yalom","Nietzsche Ağladığında","Ayrıntı Yayınları"],[665,"Modern klasikler","Roman / anlatı","John Fowles","Koleksiyoncu",""],[666,"Modern klasikler","Can Yayınları","José Mauro de Vasconcelos","Delifişek","Can Yayınları"],[667,"Modern klasikler","Can Yayınları","José Mauro de Vasconcelos","Güneşi Uyandıralım","Can Yayınları"],[668,"Modern klasikler","Can Yayınları","José Mauro de Vasconcelos","Şeker Portakalı","Can Yayınları"],[669,"Modern klasikler","Roman","José Saramago","Körlük","Kırmızı Kedi Yayınevi"],[670,"Modern klasikler","Roman","José Saramago","Mağara","Kırmızı Kedi Yayınevi"],[671,"Modern klasikler","Roman","José Saramago","Ölüm Bir Varmış Bir Yokmuş","Kırmızı Kedi Yayınevi"],[672,"Modern klasikler","Roman / anlatı","Knut Hamsun","Açlık","Varlık Yayınları"],[673,"Modern klasikler","Can Yayınları","Maksim Gorki","Ana","Can Yayınları"],[674,"Modern klasikler","İş Bankası klasikleri","Maksim Gorki","Benim Üniversitelerim","Türkiye İş Bankası Kültür Yayınları"],[675,"Modern klasikler","İş Bankası klasikleri","Maksim Gorki","Çocukluğum","Türkiye İş Bankası Kültür Yayınları"],[676,"Modern klasikler","İş Bankası klasikleri","Maksim Gorki","Ekmeğimi Kazanırken","Türkiye İş Bankası Kültür Yayınları"],[677,"Modern klasikler","","Marcel Proust","Kayıp Zamanın İzinde — I. Cilt","Yapı Kredi Yayınları / Delta"],[678,"Modern klasikler","","Marcel Proust","Kayıp Zamanın İzinde — II. Cilt","Yapı Kredi Yayınları / Delta"],[679,"Modern klasikler","Roman / anlatı","Margaret Atwood","Kör Suikastçı","Doğan Kitap"],[680,"Modern klasikler","İş Bankası klasikleri","Mihail Bulgakov","Genç Bir Doktorun Anıları","Türkiye İş Bankası Kültür Yayınları"],[681,"Modern klasikler","İş Bankası klasikleri","Mihail Bulgakov","Usta ve Margarita","Türkiye İş Bankası Kültür Yayınları"],[682,"Modern klasikler","Roman / anlatı","Osamu Dazai","İnsanlığımı Yitirirken",""],[683,"Modern klasikler","Roman / anlatı","Osamu Dazai","Öğrenci Kız",""],[684,"Modern klasikler","Can Yayınları","Paulo Coelho","Simyacı","Can Yayınları"],[685,"Modern klasikler","Can Yayınları","Paulo Coelho","Veronika Ölmek İstiyor","Can Yayınları"],[686,"Modern klasikler","Roman / anlatı","Richard Bach","Martı Jonathan Livingston",""],[687,"Modern klasikler","Roman / anlatı","Robert Louis Stevenson","Define Adası","Türkiye İş Bankası Kültür Yayınları"],[688,"Modern klasikler","Roman / anlatı","Şiro Hamao","Şeytanın Çırağı",""],[689,"Modern klasikler","Can Yayınları","Umberto Eco","Gülün Adı","Can Yayınları"],[690,"Modern klasikler","İş Bankası klasikleri","William Golding","Sineklerin Tanrısı","Türkiye İş Bankası Kültür Yayınları"],[691,"Modern klasikler","Can Yayınları","Wolfgang Borchert","Kapıların Dışında","Can Yayınları"],[692,"Modern klasikler","İş Bankası klasikleri","Yevgeni Zamyatin","Biz","Türkiye İş Bankası Kültür Yayınları"],[693,"Psikoloji","Bireysel psikoloji","Alfred Adler","İnsan Tabiatını Tanıma",""],[694,"Psikoloji","İletişim","B. J. Fogg","Küçük Alışkanlıklar","Pegasus Yayınları"],[695,"Psikoloji","Öz yardım","Bünyamin Gülmez; Mehmet Özçataloğlu","El Yazınız Sizi Anlatıyor",""],[696,"Psikoloji","Kişisel gelişim","Doğan Cüceloğlu","Evlenmeden Önce",""],[697,"Psikoloji","Deneme","Doğan Cüceloğlu","Savaşçı","Remzi Kitabevi"],[698,"Psikoloji","Kişisel gelişim","Doğan Cüceloğlu","Var mısın?",""],[699,"Psikoloji","Çocuk / terapi","Heidi Gerard Kaduson; Charles E. Schaefer","En Popüler 101 Oyun Terapisi Tekniği",""],[700,"Psikoloji","Çocuk gelişimi","Isabelle Filliozat","Çocuğun Duygusal Dünyası","Pegasus Yayınları"],[701,"Psikoloji","Alışkanlıklar","James Clear","Atomik Alışkanlıklar","Pegasus Yayınları"],[702,"Psikoloji","Nörobilim","Jill Bolte Taylor","Mucize Beyin","Diyojen Yayınları"],[703,"Psikoloji","Kişisel gelişim","Kevin Hogan","İstediğiniz Kişiye 8 Dakikada Nasıl Evet Dedirtirsiniz?","Yakamoz Kitap"],[704,"Psikoloji","Kişisel gelişim","Muhammed Bozdağ","Düşün ve Başar",""],[705,"Psikoloji","Kadın psikolojisi","Nevzat Tarhan","Kadın Psikolojisi","Timaş Yayınları"],[706,"Psikoloji","Öz yardım","Nigel Barber","Acımasız Bir Dünyada Merhamet","Alfa Yayınları"],[707,"Psikoloji","Kişisel gelişim","Stephen R. Covey","Etkili İnsanların 7 Alışkanlığı","Varlık Yayınları"],[708,"Psikoloji","Psikoloji","Tarık Solmuş","Dizilerde Psikoloji ve Anormal Davranışlar","Doruk Yayınları"],[709,"Psikoloji","Kişilik analizi","Tuncel Altınköprü","El Yazısı ile Karakter Analizi",""],[710,"Psikoloji","Anlam ve yaşam","Viktor E. Frankl","İnsanın Anlam Arayışı",""],[711,"Sanat","Sanat tarihi","E. H. Gombrich","Sanatın Öyküsü","Remzi Kitabevi"],[712,"Sanat","Sanat tarihi","Hugh Honour; John Fleming","Dünya Sanat Tarihi","Alfa Yayınları"],[713,"Sanat","Sinema","Ian Haydn Smith","Filmin Kısa Öyküsü",""],[714,"Sanat","Fotoğraf","Ian Haydn Smith","Fotoğrafın Kısa Öyküsü",""],[715,"Sanat","Sanat kuramı","John Berger","Görme Biçimleri",""],[716,"Sanat","Ressamlar","Leonardo da Vinci","Leonardo’nun Defterleri",""],[717,"Sanat","Sanat kuramı","Lev Tolstoy","Sanat Nedir?","Türkiye İş Bankası Kültür Yayınları"],[718,"Sanat","Çin sanatı","Liu Qiangong","Çin Sanatı","Kaynak Yayınları"],[719,"Sanat","Ressamlar","Michael Howard","Van Gogh: 500 Görsel Eşliğinde Yaşamı ve Eserleri",""],[720,"Sanat","Mimarlık / başvuru","Philip Wilkinson","Gerçekten Bilmeniz Gereken 50 Mimarlık Fikri","Domingo Yayınevi"],[721,"Sanat","Ressamlar","Rosalind Ormiston","Leonardo da Vinci: 500 Görsel Eşliğinde Yaşamı ve Eserleri",""],[722,"Sanat","Ressamlar","Rosalind Ormiston","Michelangelo: 500 Görsel Eşliğinde Yaşamı ve Eserleri",""],[723,"Sanat","Sanat fikirleri / başvuru","Susie Hodge","Gerçekten Bilmeniz Gereken 50 Sanat Fikri","Domingo Yayınevi"],[724,"Sanat","Mimarlık","Susie Hodge","Mimarlığın Kısa Öyküsü",""],[725,"Sanat","Modern sanat","Susie Hodge","Modern Sanatın Kısa Öyküsü",""],[726,"Sanat","Sanat kuramı","Susie Hodge","Sanatın Kısa Öyküsü",""],[727,"Sanat","Sinema","Timothy Corrigan","Film Eleştirisi El Kitabı","Dipnot Yayınları"],[728,"Sanat","Sanat tarihi","Umberto Arte","Umberto Arte ile Sanat","Destek Yayınları"],[729,"Sanat","Sanat tarihi","Umberto Arte","Umberto Arte ile Sanat — 2. Kitap","Destek Yayınları"],[730,"Sanat","Sanat tarihi","Umberto Arte","Umberto Arte ile Sanat — 3. Kitap","Destek Yayınları"],[731,"Sanat","Sanat tarihi","Umberto Arte","Umberto Arte ile Sanat — 4. Kitap","Destek Yayınları"],[732,"Sanat","Sanat tarihi","Umberto Arte","Umberto Arte ile Sanat — 5. Kitap","Destek Yayınları"],[733,"Sanat","Müzik","","Klasik Müzik Kitabı","Alfa Yayınları"],[734,"Sanat","Mimarlık / başvuru","","Mimarlık Kitabı","Alfa Yayınları"],[735,"Sanat","Pop sanat","","Pop Sanat",""],[736,"Sanat","Resim","","Resimlere Bakmak",""],[737,"Sanat","Ressamlar","","Ressamlar: Yaşamları ve Eserleri","Alfa Yayınları"],[738,"Sanat","Sanat tarihi / başvuru","","Sanat Kitabı","Alfa Yayınları"],[739,"Sanat","Sinema","","Sinema Kitabı","Alfa Yayınları"],[740,"Sanat","Yazarlar","","Yazarlar: Yaşamları ve Eserleri","Alfa Yayınları"],[741,"Süreli yayınlar","ArkeoAtlas","ArkeoAtlas","Sayı 1 · 2002",""],[742,"Süreli yayınlar","Atlas","Atlas","Sayı 274 · Ocak 2016",""],[743,"Süreli yayınlar","Atlas","Atlas","Sayı 275 · Şubat 2016",""],[744,"Süreli yayınlar","Atlas","Atlas","Sayı 276 · Mart 2016",""],[745,"Süreli yayınlar","Atlas","Atlas","Sayı 281 · Ağustos 2016",""],[746,"Süreli yayınlar","Atlas","Atlas","Sayı 99 · Haziran 2001",""],[747,"Süreli yayınlar","Bilişim","Bilişim","Sayı 38 · Temmuz–Ağustos 2013",""],[748,"Süreli yayınlar","GEO","GEO","Aralık 2015",""],[749,"Süreli yayınlar","GEO","GEO","Mart 2016",""],[750,"Süreli yayınlar","GEO","GEO","Ocak 2015",""],[751,"Süreli yayınlar","GEO","GEO","Şubat 2016",""],[752,"Süreli yayınlar","Mostar","Mostar","Ağustos 2005",""],[753,"Süreli yayınlar","Mostar","Mostar","Temmuz 2005",""],[754,"Süreli yayınlar","National Geographic","National Geographic","Mayıs 2004",""],[755,"Süreli yayınlar","National Geographic","National Geographic","Şubat 2016",""],[756,"Süreli yayınlar","Skylife","Skylife","Sayı 360 · Temmuz 2013",""],[757,"Süreli yayınlar","Skylife","Skylife","Sayı 420 · Temmuz 2018",""],[758,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 391 · Haziran 2000","TÜBİTAK"],[759,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 397 · Aralık 2000","TÜBİTAK"],[760,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 404 · Temmuz 2001","TÜBİTAK"],[761,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 405 · Ağustos 2001","TÜBİTAK"],[762,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 406 · Eylül 2001","TÜBİTAK"],[763,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 407 · Ekim 2001","TÜBİTAK"],[764,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 408 · Kasım 2001","TÜBİTAK"],[765,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 409 · Aralık 2001","TÜBİTAK"],[766,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 410 · Ocak 2002","TÜBİTAK"],[767,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 411 · Şubat 2002","TÜBİTAK"],[768,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 412 · Mart 2002","TÜBİTAK"],[769,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 414 · Mayıs 2002","TÜBİTAK"],[770,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 415 · Haziran 2002","TÜBİTAK"],[771,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 416 · Temmuz 2002","TÜBİTAK"],[772,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 417 · Ağustos 2002","TÜBİTAK"],[773,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 418 · Eylül 2002","TÜBİTAK"],[774,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 419 · Ekim 2002","TÜBİTAK"],[775,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 420 · Kasım 2002","TÜBİTAK"],[776,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 421 · Aralık 2002","TÜBİTAK"],[777,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 422 · Ocak 2003","TÜBİTAK"],[778,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 443 · Ekim 2004","TÜBİTAK"],[779,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 464 · Temmuz 2006","TÜBİTAK"],[780,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 465 · Ağustos 2006","TÜBİTAK"],[781,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 470 · Ocak 2007","TÜBİTAK"],[782,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 548 · Temmuz 2013","TÜBİTAK"],[783,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 574 · Eylül 2015","TÜBİTAK"],[784,"Süreli yayınlar","Bilim ve Teknik","TÜBİTAK","Sayı 579 · Şubat 2016","TÜBİTAK"],[785,"Tarih","Dünya tarihi","Anna Milbourne; Louie Stowell","Yunan Mitolojisi",""],[786,"Tarih","Osmanlı tarihi","Atilla Akar","Kamikaze Operasyonu","Timaş Yayınları"],[787,"Tarih","Dünya tarihi","Clive Ponting","Yeni Bir Bakış Açısıyla Dünya Tarihi","Alfa Yayınları"],[788,"Tarih","Rusya tarihi","Emel Akal","Müslüman Komünistler: Petrograd–Kazan (1917–1918)",""],[789,"Tarih","Cumhuriyet tarihi","Emrah Safa Gürkan","Cumhuriyet’in 100 Günü","İnkılâp Kitabevi"],[790,"Tarih","Dünya tarihi","Ernst H. Gombrich","Dünya Tarihi: Genç Okurlar İçin Kısa Bir Tarih",""],[791,"Tarih","İstanbul tarihi","F. Marion-Crawford","1890’larda İstanbul",""],[792,"Tarih","Osmanlı tarihi","Halil İnalcık","Kısa Osmanlı Tarihi",""],[793,"Tarih","Osmanlı tarihi","Halil İnalcık","Millî Mücadele Tarihi",""],[794,"Tarih","","Halil İnalcık","Osmanlı İmparatorluğu 1: Toplum ve Ekonomi",""],[795,"Tarih","","Halil İnalcık","Osmanlı İmparatorluğu 2: Sultan ve Siyaset",""],[796,"Tarih","","Halil İnalcık","Osmanlı İmparatorluğu 3: Fetih ve Teşkilat",""],[797,"Tarih","","Halil İnalcık","Osmanlı İmparatorluğu 4: Devlet ve İdare",""],[798,"Tarih","Yakın tarih","Hasan Celal Güzel","Kuzey Irak","Yeni Şafak Kitap"],[799,"Tarih","Antik tarih","İbn Haldun","Mukaddime",""],[800,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Atatürk",""],[801,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Bir Ömür Nasıl Yaşanır?",""],[802,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Cumhuriyet’in Doğuşu","Kronik Kitap"],[803,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Defterimden Portreler",""],[804,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Fatih Sultan Mehmed",""],[805,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","İnsan Geleceğini Nasıl Kurar?",""],[806,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","İstanbul’dan Sayfalar",""],[807,"Tarih","Osmanlı tarihi","İlber Ortaylı","Osmanlı Barışı",""],[808,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Osmanlı Devleti’nde Kadı",""],[809,"Tarih","Osmanlı tarihi","İlber Ortaylı","Osmanlı İmparatorluğu’nda Alman Nüfuzu",""],[810,"Tarih","Osmanlı tarihi","İlber Ortaylı","Osmanlı Toplumunda Aile",""],[811,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Osmanlı’yı Yeniden Keşfetmek",""],[812,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Seyahatnâmesi",""],[813,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Türkiye’nin Yakın Tarihi",""],[814,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Türklerin Altın Çağı",""],[815,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Türklerin Tarihi",""],[816,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Türklerin Tarihi 2",""],[817,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Yakın Tarihin Gerçekleri",""],[818,"Tarih","Türk ve Osmanlı tarihi","İlber Ortaylı","Zaman Kaybolmaz",""],[819,"Tarih","Salgın tarihi","Jared Diamond","Tüfek, Mikrop ve Çelik","Pegasus Yayınları"],[820,"Tarih","Mitoloji","Kathleen Sears","Mitoloji 101","Say Yayınları"],[821,"Tarih","Askerî tarih","Lawrence Freedman","Savaşın Geleceği","Say Yayınları"],[822,"Tarih","Askerî tarih","Lawrence Freedman","Strateji","Alfa Yayınları"],[823,"Tarih","Dünya tarihi","Martin Puchner","Kelimelerle Dünya Tarihi","Pegasus Yayınları"],[824,"Tarih","Kurtuluş Savaşı","Mehmet Turgut Argun","İstiklâl Harbi ve Anadolu",""],[825,"Tarih","Osmanlı tarihi","Mustafa Armağan","Abdülhamid’in Kurtlarla Dansı","Timaş Yayınları"],[826,"Tarih","Osmanlı tarihi","Mustafa Armağan","Geri Gel Ey Osmanlı","Ufuk Kitapları"],[827,"Tarih","Dünya tarihi","Neil MacGregor","100 Objede Dünya Tarihi","Pegasus Yayınları"],[828,"Tarih","Anadolu tarihi","Oğuzhan Karadirek","Anadolu Uygarlıkları",""],[829,"Tarih","Kültür tarihi","Sema Soykan","Öteki Şeylerin Tarihi","Alfa Yayınları"],[830,"Tarih","Biyografi","Şevket Süreyya Aydemir","Suyu Arayan Adam","Remzi Kitabevi"],[831,"Tarih","Türk tarihi","Turgut Özakman","Şu Çılgın Türkler","Bilgi Yayınevi"],[832,"Tarih","Osmanlı tarihi","Yirmisekiz Mehmet Çelebi","Paris’te Bir Osmanlı Sefiri",""],[833,"Tarih","Antik uygarlıklar","","Antik Çağlardan Günümüze İcatların Öyküsü",""],[834,"Tarih","Antik uygarlıklar","","Antik Çağlardan Günümüze Mimarlığın Öyküsü",""],[835,"Tarih","Arkeoloji","","Arkeoloji","TÜBİTAK Yayınları"],[836,"Tarih","Okültizm tarihi","","Büyü: Cadılık ve Okültizm Tarihi","Alfa Yayınları"],[837,"Tarih","Çin tarihi","","Çin İmparatorluğu","Alfa Yayınları"],[838,"Tarih","Bilim tarihi","","Gökyüzü ve Bilim Tarihi","Boyut Yayın Grubu"],[839,"Tarih","Birinci Dünya Savaşı","","I. Dünya Savaşı: En Kapsamlı Görsel Rehber","Alfa Yayınları"],[840,"Tarih","İkinci Dünya Savaşı","","II. Dünya Savaşı: En Kapsamlı Görsel Rehber","Alfa Yayınları"],[841,"Tarih","İkinci Dünya Savaşı","","İkinci Dünya Savaşı İnfografik: 1939–1945",""],[842,"Tarih","Seyahat tarihi","","Marco Polo",""],[843,"Türk edebiyatı","Roman / edebiyat","Adalet Ağaoğlu","Dar Zamanlar",""],[844,"Türk edebiyatı","Roman","Ahmet Turgut","Bozkırın Sırrı: Türk Peygamber","Kapı Yayınları"],[845,"Türk edebiyatı","Roman / anlatı","Ahmet Ümit","Bab-ı Esrar","Doğan Kitap"],[846,"Türk edebiyatı","Roman / anlatı","Ahmet Ümit","Bir Aşk Masalı","Yapı Kredi Yayınları"],[847,"Türk edebiyatı","Roman / anlatı","Ahmet Ümit","Kayıp Tanrılar Ülkesi","Yapı Kredi Yayınları"],[848,"Türk edebiyatı","Roman / anlatı","Ali Şeriati","Dine Karşı Din","Fecr Yayınları"],[849,"Türk edebiyatı","Roman","Ayfer Tunç","Bir Deliler Evinin Yalan Yanlış Anlatılan Kısa Tarihi",""],[850,"Türk edebiyatı","Roman / anlatı","Ayfer Tunç","Yeşil Peri Gecesi","Can Yayınları"],[851,"Türk edebiyatı","Roman","Aziz Nesin","Yaşar Ne Yaşar Ne Yaşamaz","Nesin Yayınevi"],[852,"Türk edebiyatı","Roman","Aziz Nesin","Zübük","Nesin Yayınevi"],[853,"Türk edebiyatı","Can Yayınları cep kitapları","Cahit Sıtkı Tarancı","Otuz Beş Yaş","Can Yayınları"],[854,"Türk edebiyatı","Roman / anlatı","Cahit Zarifoğlu","Yaşamak",""],[855,"Türk edebiyatı","Can Yayınları cep kitapları","Can Dündar","Lüsyen","Can Yayınları"],[856,"Türk edebiyatı","Roman / anlatı","Cengiz Dağcı","Onlar da İnsandı","Ötüken Neşriyat"],[857,"Türk edebiyatı","Roman","Deniz Gezgin","Ahraz",""],[858,"Türk edebiyatı","Roman","Elif Şafak","Baba ve Piç","Doğan Kitap"],[859,"Türk edebiyatı","Roman","Elif Şafak","Ustam ve Ben","Doğan Kitap"],[860,"Türk edebiyatı","Roman","Erdoğdu Aktaş","Mahkûmiyet",""],[861,"Türk edebiyatı","Roman","Fakir Baykurt","Eşekli Kütüphaneci",""],[862,"Türk edebiyatı","Roman","Fakir Baykurt","Yüksek Fırınlar",""],[863,"Türk edebiyatı","Can Yayınları cep kitapları","Halide Edib Adıvar","Ateşten Gömlek","Can Yayınları"],[864,"Türk edebiyatı","Roman","Halide Edib Adıvar","Sinekli Bakkal","Can Yayınları"],[865,"Türk edebiyatı","Roman","Hasan Ali Toptaş","Kuşlar Yasına Gider",""],[866,"Türk edebiyatı","Roman","Hasan İzzettin Dinamo","Savaş ve Açlar",""],[867,"Türk edebiyatı","Roman / anlatı","Hüseyin Nihal Atsız","Ruh Adam","Ötüken Neşriyat"],[868,"Türk edebiyatı","Roman / edebiyat","İhsan Oktay Anar","Efrâsiyâb’ın Hikâyeleri","İletişim Yayınları"],[869,"Türk edebiyatı","Roman / edebiyat","İhsan Oktay Anar","Puslu Kıtalar Atlası","İletişim Yayınları"],[870,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Ah mine’l-Aşk","Kapı Yayınları"],[871,"Türk edebiyatı","Roman","İskender Pala","Azdahak",""],[872,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Babil’de Ölüm İstanbul’da Aşk","Kapı Yayınları"],[873,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Bülbülün Kırk Şarkısı","Kapı Yayınları"],[874,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Divan Edebiyatı","Kapı Yayınları"],[875,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Divane Güzeller","Kapı Yayınları"],[876,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Dört Güzeller: Toprak, Su, Hava, Ateş","Kapı Yayınları"],[877,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Kahve Molası","Kapı Yayınları"],[878,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Kervan","Kapı Yayınları"],[879,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Kırk Ambar","Kapı Yayınları"],[880,"Türk edebiyatı","Edebiyat","İskender Pala","Kitab-ı Aşk","Alfa Yayınları"],[881,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Mihmandar","Kapı Yayınları"],[882,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Od","Kapı Yayınları"],[883,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Surnâme","Kapı Yayınları"],[884,"Türk edebiyatı","Roman / edebiyat","İskender Pala","Tavan Arası","Kapı Yayınları"],[885,"Türk edebiyatı","Roman","Kemal Varol","Âşıklar Bayramı",""],[886,"Türk edebiyatı","Roman","Kürşat Başar","Başucumda Müzik",""],[887,"Türk edebiyatı","Roman","Mehtap Ceyran","Mevsim Yas",""],[888,"Türk edebiyatı","Roman / anlatı","Mustafa Kutlu","Uzun Hikâye","Dergâh Yayınları"],[889,"Türk edebiyatı","Roman / anlatı","Mümtaz’er Türköne","Bin Dokuz Yüz Yetmiş Sekiz",""],[890,"Türk edebiyatı","Roman","Nazan Bekiroğlu","Nar Ağacı","Timaş Yayınları"],[891,"Türk edebiyatı","Roman","Nazan Bekiroğlu","Sonsuzluk Hecesi","Timaş Yayınları"],[892,"Türk edebiyatı","Roman","Nazan Bekiroğlu","Yûsuf ile Züleyha","Timaş Yayınları"],[893,"Türk edebiyatı","Roman","Nazlı Çiçek","Zekeriya Yavuz",""],[894,"Türk edebiyatı","Roman","Nermin Yıldırım","Dokunmadan",""],[895,"Türk edebiyatı","Öykü","Oğuz Atay","Korkuyu Beklerken",""],[896,"Türk edebiyatı","Roman","Oğuz Atay","Tutunamayanlar",""],[897,"Türk edebiyatı","Roman","Orhan Pamuk","Cevdet Bey ve Oğulları","Yapı Kredi Yayınları"],[898,"Türk edebiyatı","Roman / edebiyat","Orhan Pamuk","Kafamda Bir Tuhaflık","Yapı Kredi Yayınları"],[899,"Türk edebiyatı","Roman / edebiyat","Orhan Pamuk","Kırmızı Saçlı Kadın","Yapı Kredi Yayınları"],[900,"Türk edebiyatı","Roman / edebiyat","Orhan Pamuk","Masumiyet Müzesi","Yapı Kredi Yayınları"],[901,"Türk edebiyatı","Roman / edebiyat","Orhan Pamuk","Veba Geceleri","Yapı Kredi Yayınları"],[902,"Türk edebiyatı","Kurgu dizisi","Serkan Karaismailoğlu","Arachnoid Mater","Elma Yayınevi"],[903,"Türk edebiyatı","Kurgu dizisi","Serkan Karaismailoğlu","Dura Mater","Elma Yayınevi"],[904,"Türk edebiyatı","Kurgu dizisi","Serkan Karaismailoğlu","Pia Mater","Elma Yayınevi"],[905,"Türk edebiyatı","Roman / anlatı","Vedat Türkali","Bir Gün Tek Başına","Ayrıntı Yayınları"],[906,"Türk edebiyatı","Roman","Zülfü Livaneli","Huzursuzluk","Doğan Kitap"],[907,"Türk edebiyatı","Roman","Zülfü Livaneli","Serenad",""],[908,"Türk klasikleri","Roman / öykü","Ahmet Hamdi Tanpınar","Hikâyeler",""],[909,"Türk klasikleri","Roman / öykü","Ahmet Hamdi Tanpınar","Huzur",""],[910,"Türk klasikleri","Roman / öykü","Ahmet Hamdi Tanpınar","Saatleri Ayarlama Enstitüsü",""],[911,"Türk klasikleri","Karbon cep kitapları","Ahmet Hâşim","Bize Göre ve Bir Seyahatin Notları","Karbon Kitaplar"],[912,"Türk klasikleri","Karbon cep kitapları","Ahmet Hâşim","Bütün Şiirleri","Karbon Kitaplar"],[913,"Türk klasikleri","Karbon cep kitapları","Ahmet Hâşim","Bütün Yazıları","Karbon Kitaplar"],[914,"Türk klasikleri","Karbon cep kitapları","Ahmet Hâşim","Frankfurt Seyahatnamesi","Karbon Kitaplar"],[915,"Türk klasikleri","Karbon cep kitapları","Ahmet Hâşim","Gurabahane-i Laklakan","Karbon Kitaplar"],[916,"Türk klasikleri","Karbon cep kitapları","Ahmet Hikmet Müftüoğlu","Gönül Hanım","Karbon Kitaplar"],[917,"Türk klasikleri","Karbon cep kitapları","Ahmet Mithat Efendi","Dürdane Hanım","Karbon Kitaplar"],[918,"Türk klasikleri","Karbon cep kitapları","Ahmet Mithat Efendi","Felâtun Bey ile Râkım Efendi","Karbon Kitaplar"],[919,"Türk klasikleri","Roman / öykü / düşünce","Cemil Meriç","Bu Ülke","İletişim Yayınları"],[920,"Türk klasikleri","Karbon cep kitapları","Cenap Şahabettin","Tiryaki Sözleri","Karbon Kitaplar"],[921,"Türk klasikleri","Anı / tarih","Falih Rıfkı Atay","Zeytindağı","Pozitif Yayınları"],[922,"Türk klasikleri","Roman / öykü / düşünce","Filibeli Ahmed Hilmi","A’mâk-ı Hayal","Ötüken Neşriyat"],[923,"Türk klasikleri","Roman / şiir","Halit Ziya Uşaklıgil","Aşk-ı Memnu","Ötüken Neşriyat"],[924,"Türk klasikleri","Karbon cep kitapları","Halit Ziya Uşaklıgil","Bir Ölünün Defteri","Karbon Kitaplar"],[925,"Türk klasikleri","Karbon cep kitapları","Halit Ziya Uşaklıgil","Ferdi ve Şürekâsı","Karbon Kitaplar"],[926,"Türk klasikleri","Roman / şiir","Halit Ziya Uşaklıgil","Mai ve Siyah","Ötüken Neşriyat"],[927,"Türk klasikleri","Karbon cep kitapları","Halit Ziya Uşaklıgil","Nemide","Karbon Kitaplar"],[928,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Efsuncu Baba","Karbon Kitaplar"],[929,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Gönül Ticareti","Karbon Kitaplar"],[930,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","İki Hödüğün Seyahati","Karbon Kitaplar"],[931,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Kuyruklu Yıldız Altında Bir İzdivaç","Karbon Kitaplar"],[932,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Melek Sanmıştım Şeytanı","Karbon Kitaplar"],[933,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Mürebbiye","Karbon Kitaplar"],[934,"Türk klasikleri","Roman / şiir","Hüseyin Rahmi Gürpınar","Mürebbiye","Ötüken Neşriyat"],[935,"Türk klasikleri","Karbon cep kitapları","Hüseyin Rahmi Gürpınar","Şık","Karbon Kitaplar"],[936,"Türk klasikleri","Roman / öykü / düşünce","Mehmet Rauf","Eylül","Türkiye İş Bankası Kültür Yayınları"],[937,"Türk klasikleri","Roman","Memduh Şevket Esendal","Ayaşlı ile Kiracıları",""],[938,"Türk klasikleri","Karbon cep kitapları","Nabizade Nazım","Zehra","Karbon Kitaplar"],[939,"Türk klasikleri","Karbon cep kitapları","Namık Kemal","Gülnihal","Karbon Kitaplar"],[940,"Türk klasikleri","Karbon cep kitapları","Namık Kemal","İntibah","Karbon Kitaplar"],[941,"Türk klasikleri","Karbon cep kitapları","Namık Kemal","Vatan Yahut Silistre","Karbon Kitaplar"],[942,"Türk klasikleri","Roman / şiir","Nâzım Hikmet","Benerci Kendini Niçin Öldürdü?","Yapı Kredi Yayınları"],[943,"Türk klasikleri","Roman / şiir","Nâzım Hikmet","Ne Güzel Şey Hatırlamak Seni","Yapı Kredi Yayınları"],[944,"Türk klasikleri","Roman / edebiyat","Necip Fazıl Kısakürek","Bir Adam Yaratmak","Büyük Doğu Yayınları"],[945,"Türk klasikleri","Roman / edebiyat","Necip Fazıl Kısakürek","Çile","Büyük Doğu Yayınları"],[946,"Türk klasikleri","Roman / edebiyat","Necip Fazıl Kısakürek","Reis Bey","Büyük Doğu Yayınları"],[947,"Türk klasikleri","Roman / şiir","Orhan Veli Kanık","Bütün Şiirleri","Yapı Kredi Yayınları"],[948,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Bahar ve Kelebekler","Karbon Kitaplar"],[949,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Başını Vermeyen Şehit","Karbon Kitaplar"],[950,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Beyaz Lale","Karbon Kitaplar"],[951,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Bomba","Karbon Kitaplar"],[952,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Diyet","Karbon Kitaplar"],[953,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Efruz Bey","Karbon Kitaplar"],[954,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Falaka","Karbon Kitaplar"],[955,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","İlk Namaz","Karbon Kitaplar"],[956,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Kaşağı","Karbon Kitaplar"],[957,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Pembe İncili Kaftan","Karbon Kitaplar"],[958,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Perili Köşk","Karbon Kitaplar"],[959,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Primo Türk Çocuğu","Karbon Kitaplar"],[960,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Topuz","Karbon Kitaplar"],[961,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Üç Nasihat","Karbon Kitaplar"],[962,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Yalnız Efe","Karbon Kitaplar"],[963,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Yeni Lisan","Karbon Kitaplar"],[964,"Türk klasikleri","Karbon cep kitapları","Ömer Seyfettin","Yüksek Ökçeler","Karbon Kitaplar"],[965,"Türk klasikleri","Roman / öykü / düşünce","Peyami Safa","Dokuzuncu Hariciye Koğuşu","Ötüken Neşriyat"],[966,"Türk klasikleri","Roman / öykü / düşünce","Peyami Safa","Fatih-Harbiye","Ötüken Neşriyat"],[967,"Türk klasikleri","Roman / öykü / düşünce","Peyami Safa","Yalnızız","Ötüken Neşriyat"],[968,"Türk klasikleri","Karbon cep kitapları","Recaizade Mahmut Ekrem","Araba Sevdası","Karbon Kitaplar"],[969,"Türk klasikleri","Roman / şiir","Reşat Nuri Güntekin","Acımak","İnkılâp Kitabevi"],[970,"Türk klasikleri","Roman / edebiyat","Reşat Nuri Güntekin","Dudaktan Kalbe","İnkılâp Kitabevi"],[971,"Türk klasikleri","Roman / edebiyat","Reşat Nuri Güntekin","Yaprak Dökümü","İnkılâp Kitabevi"],[972,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","Bütün Şiirleri","Yapı Kredi Yayınları"],[973,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Değirmen","Karbon Kitaplar"],[974,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","Değirmen","Yapı Kredi Yayınları"],[975,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Esirler","Karbon Kitaplar"],[976,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","İçimizdeki Şeytan","Karbon Kitaplar"],[977,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","İçimizdeki Şeytan","Yapı Kredi Yayınları"],[978,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Kağnı – Ses","Karbon Kitaplar"],[979,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Kuyucaklı Yusuf","Karbon Kitaplar"],[980,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Kürk Mantolu Madonna","Karbon Kitaplar"],[981,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","Kürk Mantolu Madonna","Yapı Kredi Yayınları"],[982,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Sırça Köşk","Karbon Kitaplar"],[983,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","Sırça Köşk","Yapı Kredi Yayınları"],[984,"Türk klasikleri","Karbon cep kitapları","Sabahattin Ali","Yeni Dünya","Karbon Kitaplar"],[985,"Türk klasikleri","Roman / öykü / şiir","Sabahattin Ali","Yeni Dünya","Yapı Kredi Yayınları"],[986,"Türk klasikleri","Roman / öykü / düşünce","Sait Faik Abasıyanık","Son Kuşlar","Türkiye İş Bankası Kültür Yayınları"],[987,"Türk klasikleri","Karbon cep kitapları","Samipaşazade Sezai","Sergüzeşt","Karbon Kitaplar"],[988,"Türk klasikleri","Karbon cep kitapları","Şemsettin Sami","Taaşşuk-ı Talat ve Fitnat","Karbon Kitaplar"],[989,"Türk klasikleri","Roman","Şevket Süreyya Aydemir","Toprak Uyanırsa","Remzi Kitabevi"],[990,"Türk klasikleri","Roman / şiir","Tarık Buğra","Gençliğim Eyvah",""],[991,"Türk klasikleri","Roman / şiir","Tarık Buğra","Küçük Ağa",""],[992,"Türk klasikleri","Roman / şiir","Tarık Buğra","Osmancık",""],[993,"Türk klasikleri","Karbon cep kitapları","Tevfik Fikret","Haluk’un Defteri","Karbon Kitaplar"],[994,"Türk klasikleri","Karbon cep kitapları","Tevfik Fikret","Şermin","Karbon Kitaplar"],[995,"Türk klasikleri","Şiir","Turgut Uyar","Büyük Saat","Yapı Kredi Yayınları"],[996,"Türk klasikleri","Roman","Yakup Kadri Karaosmanoğlu","Kiralık Konak",""],[997,"Türk klasikleri","Roman","Yakup Kadri Karaosmanoğlu","Yaban","İletişim Yayınları"],[998,"Türk klasikleri","Roman / anlatı","Yaşar Kemal","Ağrıdağı Efsanesi","Yapı Kredi Yayınları"],[999,"Türk klasikleri","Roman / anlatı","Yaşar Kemal","Çocuklar İnsandır","Yapı Kredi Yayınları"],[1000,"Türk klasikleri","Roman / anlatı","Yaşar Kemal","Demirciler Çarşısı Cinayeti: Akçasazın Ağaları 1","Yapı Kredi Yayınları"],[1001,"Türk klasikleri","Roman / dizi","Yaşar Kemal","Filler Sultanı ile Kırmızı Sakallı Topal Karınca","Yapı Kredi Yayınları"],[1002,"Türk klasikleri","Roman / dizi","Yaşar Kemal","İnce Memed 1","Yapı Kredi Yayınları"],[1003,"Türk klasikleri","Roman / dizi","Yaşar Kemal","İnce Memed 2","Yapı Kredi Yayınları"],[1004,"Türk klasikleri","Roman / dizi","Yaşar Kemal","İnce Memed 3","Yapı Kredi Yayınları"],[1005,"Türk klasikleri","Roman / dizi","Yaşar Kemal","İnce Memed 4","Yapı Kredi Yayınları"],[1006,"Türk klasikleri","Roman / anlatı","Yaşar Kemal","Üç Anadolu Efsanesi: Köroğlu, Karacaoğlan, Alageyik","Yapı Kredi Yayınları"],[1007,"Türk klasikleri","Karbon cep kitapları","Yusuf Akçura","Üç Tarz-ı Siyaset","Karbon Kitaplar"],[1008,"Türk klasikleri","Roman","Yusuf Atılgan","Anayurt Oteli","Can Yayınları"],[1009,"Türk klasikleri","Roman","Yusuf Atılgan","Aylak Adam","Can Yayınları"],[1010,"Türk klasikleri","Karbon cep kitapları","Ziya Gökalp","Altın Işık","Karbon Kitaplar"],[1011,"Türk klasikleri","Karbon cep kitapları","Ziya Gökalp","Kızıl Elma","Karbon Kitaplar"],[1012,"Türk klasikleri","Karbon cep kitapları","Ziya Gökalp","Türkçülüğün Esasları","Karbon Kitaplar"],[1013,"Türk klasikleri","Karbon cep kitapları","Ziya Gökalp","Türkleşmek İslamlaşmak Muasırlaşmak","Karbon Kitaplar"],[1014,"Türk klasikleri","Karbon cep kitapları","Ziya Gökalp","Yeni Hayat","Karbon Kitaplar"],[1015,"Yabancı edebiyat","Roman","Adam Fawer","Empati","April Yayıncılık"],[1016,"Yabancı edebiyat","Roman","Adam Fawer","Olasılıksız","April Yayıncılık"],[1017,"Yabancı edebiyat","Roman","Bernhard Schlink","Okuyucu",""],[1018,"Yabancı edebiyat","Roman","Debbie Macomber","Küçük Mucizeler Dükkânı",""],[1019,"Yabancı edebiyat","Roman","Erlend Loe","Doppler","Yapı Kredi Yayınları"],[1020,"Yabancı edebiyat","Roman","Gary Small; Gigi Vorgan","Bir Psikiyatristin Gizli Defteri","N Yayınları"],[1021,"Yabancı edebiyat","Roman","Henri Charrière","Banko","E Yayınları"],[1022,"Yabancı edebiyat","Roman","Henri Charrière","Kelebek","E Yayınları"],[1023,"Yabancı edebiyat","Roman","Jojo Moyes","Senden Önce Ben","Pegasus Yayınları"],[1024,"Yabancı edebiyat","Roman","Judith McNaught","Kalbim Sende Kaldı","Epsilon Yayınevi"],[1025,"Yabancı edebiyat","Edebiyat","Jun’ichirō Tanizaki","Nazlı Kar",""],[1026,"Yabancı edebiyat","Roman","Khaled Hosseini","Bin Muhteşem Güneş",""],[1027,"Yabancı edebiyat","Roman","Khaled Hosseini","Uçurtma Avcısı",""],[1028,"Yabancı edebiyat","Roman","Laurent Gounelle","Mutlu Olmak İsteyen Adam",""],[1029,"Yabancı edebiyat","Mitolojik roman","Madeline Miller","Akhilleus’un Şarkısı","İthaki Yayınları"],[1030,"Yabancı edebiyat","Mitolojik roman","Madeline Miller","Ben, Kirke","İthaki Yayınları"],[1031,"Yabancı edebiyat","Roman","Magda Szabó","Iza’nın Şarkısı","Yapı Kredi Yayınları"],[1032,"Yabancı edebiyat","Can Yayınları cep kitapları","Marc Levy","Keşke Gerçek Olsa","Can Yayınları"],[1033,"Yabancı edebiyat","Roman","Marc Vidal","Paris’te Bir Karınca",""],[1034,"Yabancı edebiyat","Roman","Matt Haig","Gece Yarısı Kütüphanesi","Domingo Yayınevi"],[1035,"Yabancı edebiyat","Roman","Matt Haig","İnsanlar","Domingo Yayınevi"],[1036,"Yabancı edebiyat","Roman","Randy Pausch; Jeffrey Zaslow","Son Konuşma",""],[1037,"Yabancı edebiyat","Roman","Sâdık Hidâyet","Kör Baykuş","İthaki Yayınları"],[1038,"Yabancı edebiyat","Roman","Walter Tevis","Vezir Gambiti","İthaki Yayınları"],[1039,"Yemek / içecek","Kahve rehberi","Anette Moldvaer","Kahve Kitabı","Alfa Yayınları"],[1040,"Yemek / içecek","Kahve rehberi","Anette Moldvaer","Kahve Tutkusu","NTV Yayınları"],[1041,"Yemek / içecek","Kahve kültürü","Emine Gürsoy Naskali (haz.)","Kahve: Kırk Yıllık Hatırın Kitabı","Yapı Kredi Yayınları"],[1042,"Yemek / içecek","Dünya mutfakları","Neşet Eren","Çin Mutfağından Seçmeler",""],[1043,"Yemek / içecek","Pratik tarifler","Refika Birgül","Refika’dan Hızlı Tarifler","Alfa Yayınları"],[1044,"Yemek / içecek","İçecek tarifleri","Sarah Owen","En İyi 100 İçecek",""],[1045,"Yemek / içecek","Kahve kültürü","Sébastien Racineux; Chung-Leng Tran","Kim Korkar Kahveden","Nail Kitabevi"],[1046,"Yemek / içecek","Tarifler","","Akdeniz Yemekleri","Boyut Yayın Grubu"],[1047,"Yemek / içecek","Yemek kültürü","","Bir Yemek Masalı","DK"],[1048,"Yemek / içecek","Çin mutfağı","","Çin Mutfağı","Boyut Yayın Grubu"],[1049,"Yemek / içecek","Çin mutfağı","","Çin Mutfağının Sırları","Doğan Kitap"],[1050,"Yemek / içecek","Tarifler","","Lezzet Saati","Boyut Yayın Grubu"],[1051,"Yemek / içecek","Mutfak rehberi","","Pratik Mutfak Rehberi","Boyut Yayın Grubu"],[1052,"Yemek / içecek","Tarifler","","Yaz Mutfağı","Boyut Yayın Grubu"]]/*VERI-SONU*/;
+
+/** Dizi kaydını nesneye çevirir. */
+function hidrate(satir){
+  const k = {};
+  SUTUNLAR.forEach(function(ad,i){ k[ad] = satir[i] == null ? "" : satir[i]; });
+  k.id = String(k.no);
+  k.yeni = false;
+  return k;
+}
+
+/* ===================================================================
+   2. YARDIMCILAR
+   =================================================================== */
+
+/** Türkçe duyarlı arama normalleştirmesi: "ÇİĞDEM" -> "cigdem" */
+function katla(s){
+  return String(s == null ? "" : s)
+    .toLocaleLowerCase("tr")
+    .replace(/ı/g,"i")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"");
+}
+
+const harmanla = new Intl.Collator("tr",{sensitivity:"base",numeric:true});
+const sayiBicim = new Intl.NumberFormat("tr-TR");
+
+function kacis(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
+}
+
+/** Eşleşen parçaları <mark> ile sarar. */
+function isaretle(metin, parcalar){
+  const ham = String(metin == null ? "" : metin);
+  if(!parcalar.length || !ham) return kacis(ham);
+  const kat = katla(ham);
+  if(kat.length !== ham.length) return kacis(ham); // hizalama bozuksa işaretleme yapma
+  const araliklar = [];
+  for(const p of parcalar){
+    if(!p) continue;
+    let i = kat.indexOf(p);
+    while(i !== -1){ araliklar.push([i, i+p.length]); i = kat.indexOf(p, i+p.length); }
+  }
+  if(!araliklar.length) return kacis(ham);
+  araliklar.sort(function(a,b){ return a[0]-b[0]; });
+  const birlesik = [araliklar[0]];
+  for(let j=1;j<araliklar.length;j++){
+    const son = birlesik[birlesik.length-1];
+    if(araliklar[j][0] <= son[1]) son[1] = Math.max(son[1], araliklar[j][1]);
+    else birlesik.push(araliklar[j]);
+  }
+  let cikti = "", imlec = 0;
+  for(const par of birlesik){
+    cikti += kacis(ham.slice(imlec,par[0])) + "<mark>" + kacis(ham.slice(par[0],par[1])) + "</mark>";
+    imlec = par[1];
+  }
+  return cikti + kacis(ham.slice(imlec));
+}
+
+/** Kategori adından kararlı, uyumlu bir renk üretir. */
+const RENK_TONLARI = [16,34,45,58,88,120,150,168,186,202,218,236,252,268,286,300,318,340,352];
+function kategoriRengi(ad){
+  let h = 0;
+  const s = String(ad == null ? "" : ad);
+  for(let i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) >>> 0; }
+  const ton = RENK_TONLARI[h % RENK_TONLARI.length];
+  return "hsl(" + ton + " var(--kategori-s) var(--kategori-l))";
+}
+
+function gecikmeli(fn, ms){
+  let t;
+  return function(){
+    const a = arguments;
+    clearTimeout(t);
+    t = setTimeout(function(){ fn.apply(null,a); }, ms);
+  };
+}
+
+function indir(adi, icerik, tur){
+  const blob = new Blob([icerik], {type:tur});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = adi;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+
+/* ===================================================================
+   3. SAKLAMA
+   Yalnızca "fark" saklanır: eklenen, silinen, düzenlenen.
+   Böylece tohum veri güncellenince kullanıcı değişiklikleri korunur.
+   localStorage kapalıysa sayfa bellekte çalışmaya devam eder.
+   =================================================================== */
+const ANAHTAR = "halim-kutuphanesi:v1";
+const TEMA_ANAHTAR = "halim-kutuphanesi:tema";
+const GORUNUM_ANAHTAR = "halim-kutuphanesi:gorunum";
+
+const depo = {
+  kullanilabilir: function(){
+    try{ localStorage.setItem("__t","1"); localStorage.removeItem("__t"); return true; }
+    catch(e){ return false; }
+  },
+  oku: function(anahtar, varsayilan){
+    try{ const h = localStorage.getItem(anahtar); return h ? JSON.parse(h) : varsayilan; }
+    catch(e){ return varsayilan; }
+  },
+  yaz: function(anahtar, deger){
+    try{ localStorage.setItem(anahtar, JSON.stringify(deger)); return true; }
+    catch(e){ return false; }
+  },
+  temizle: function(anahtar){
+    try{ localStorage.removeItem(anahtar); }catch(e){}
+  }
+};
+
+let fark = depo.oku(ANAHTAR, null) || {};
+fark.eklenen = Array.isArray(fark.eklenen) ? fark.eklenen : [];
+fark.silinen = Array.isArray(fark.silinen) ? fark.silinen : [];
+fark.duzenlenen = (fark.duzenlenen && typeof fark.duzenlenen === "object") ? fark.duzenlenen : {};
+
+function farkKaydet(){ depo.yaz(ANAHTAR, fark); }
+
+/* ===================================================================
+   4. ÇALIŞMA KÜMESİ
+   =================================================================== */
+let kitaplar = [];
+let dizinler = {kategori:new Map(), yazar:new Map(), yayinevi:new Map(), tur:new Set()};
+
+function kumeyiKur(){
+  const silinenKume = new Set(fark.silinen);
+  kitaplar = TOHUM
+    .map(hidrate)
+    .filter(function(k){ return !silinenKume.has(k.id); })
+    .map(function(k){
+      return fark.duzenlenen[k.id] ? Object.assign({}, k, fark.duzenlenen[k.id]) : k;
+    });
+
+  for(const e of fark.eklenen){
+    if(silinenKume.has(e.id)) continue;
+    kitaplar.push(Object.assign({no:"", tur:"", yazar:"", yayinevi:""}, e, {yeni:true}));
+  }
+
+  for(const k of kitaplar){
+    k._ara = katla([k.kitap,k.yazar,k.yayinevi,k.kategori,k.tur].join(" "));
+    k._renk = kategoriRengi(k.kategori);
+  }
+
+  dizinleriKur();
+}
+
+function dizinleriKur(){
+  dizinler = {kategori:new Map(), yazar:new Map(), yayinevi:new Map(), tur:new Set()};
+  for(const k of kitaplar){
+    const alanlar = ["kategori","yazar","yayinevi"];
+    for(const alan of alanlar){
+      const d = (k[alan] || "").trim();
+      if(!d) continue;
+      dizinler[alan].set(d, (dizinler[alan].get(d) || 0) + 1);
+    }
+    if(k.tur) dizinler.tur.add(k.tur.trim());
+  }
+}
+
+function sirali(harita){
+  return Array.from(harita.entries()).sort(function(a,b){ return harmanla.compare(a[0],b[0]); });
+}
+
+/* ===================================================================
+   5. DURUM
+   =================================================================== */
+const ADIM = 60;
+const durum = {
+  arama:"", parcalar:[],
+  kategori:"", yazar:"", yayinevi:"",
+  sirala:"no",
+  gorunum: depo.oku(GORUNUM_ANAHTAR,"izgara") === "liste" ? "liste" : "izgara",
+  limit:ADIM
+};
+
+function el(id){ return document.getElementById(id); }
+const dom = {
+  arama:el("arama"), sayac:el("sayac"), kategoriRay:el("kategoriRay"),
+  fYazar:el("fYazar"), fYayinevi:el("fYayinevi"), fSirala:el("fSirala"),
+  temizle:el("temizle"), sonucSayisi:el("sonucSayisi"), kayitlar:el("kayitlar"),
+  daha:el("daha"), dahaDugme:el("dahaDugme"), nobetci:el("nobetci"),
+  perde:el("perde"), kipForm:el("kipForm"), kipBaslik:el("kipBaslik"),
+  kipAltYazi:el("kipAltYazi"), kipKaydet:el("kipKaydet"),
+  bildirim:el("bildirim"), bildirimMetin:el("bildirimMetin"),
+  fisilti:el("fisilti"), mihur:el("mihur"), dosya:el("dosya")
+};
+
+/* ===================================================================
+   6. SÜZME
+   =================================================================== */
+const SIRALAYICILAR = {
+  "no":       function(a,b){ return (Number(a.no)||1e9) - (Number(b.no)||1e9); },
+  "ad":       function(a,b){ return harmanla.compare(a.kitap,b.kitap); },
+  "ad-ters":  function(a,b){ return harmanla.compare(b.kitap,a.kitap); },
+  "yazar":    function(a,b){ return harmanla.compare(a.yazar||"zzzz", b.yazar||"zzzz") || harmanla.compare(a.kitap,b.kitap); },
+  "kategori": function(a,b){ return harmanla.compare(a.kategori,b.kategori) || harmanla.compare(a.kitap,b.kitap); },
+  "yeni":     function(a,b){ return (b.yeni?1:0) - (a.yeni?1:0) || (Number(b.no)||0) - (Number(a.no)||0); }
+};
+
+function suz(){
+  const p = durum.parcalar;
+  const liste = kitaplar.filter(function(k){
+    if(durum.kategori && k.kategori !== durum.kategori) return false;
+    if(durum.yazar && k.yazar !== durum.yazar) return false;
+    if(durum.yayinevi && k.yayinevi !== durum.yayinevi) return false;
+    for(let i=0;i<p.length;i++){ if(k._ara.indexOf(p[i]) === -1) return false; }
+    return true;
+  });
+  return liste.sort(SIRALAYICILAR[durum.sirala] || SIRALAYICILAR["no"]);
+}
+
+/* ===================================================================
+   7. ÇİZİM
+   =================================================================== */
+function kartHtml(k){
+  const p = durum.parcalar;
+  const raf = k.yeni
+    ? '<span class="yeni-im">yeni</span>'
+    : '<span class="raf">#' + kacis(String(k.no).padStart(4,"0")) + '</span>';
+  return '' +
+  '<article class="kart" data-id="' + kacis(k.id) + '" style="--k:' + k._renk + '">' +
+    '<div class="kart-ust">' + raf +
+      '<div class="kart-islem">' +
+        '<button type="button" class="duzenle" data-id="' + kacis(k.id) + '" aria-label="' + kacis(k.kitap) + ' kaydını düzenle" title="Düzenle">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L19 9a2.1 2.1 0 0 0-3-3L5 17v3z"/></svg>' +
+        '</button>' +
+        '<button type="button" class="sil" data-id="' + kacis(k.id) + '" aria-label="' + kacis(k.kitap) + ' kaydını sil" title="Sil">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13"/></svg>' +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+    '<h3 class="kart-ad">' + isaretle(k.kitap,p) + '</h3>' +
+    (k.yazar ? '<p class="kart-yazar">' + isaretle(k.yazar,p) + '</p>' : '') +
+    (k.yayinevi ? '<p class="kart-yayin">' + isaretle(k.yayinevi,p) + '</p>' : '') +
+    '<div class="kart-alt">' +
+      '<button type="button" class="rozet kategori-sec" data-kategori="' + kacis(k.kategori) + '">' + isaretle(k.kategori,p) + '</button>' +
+      (k.tur ? '<span class="tur">' + isaretle(k.tur,p) + '</span>' : '') +
+    '</div>' +
+  '</article>';
+}
+
+let suzulen = [];
+
+function ciz(){
+  suzulen = suz();
+  const toplam = suzulen.length;
+  const gosterilen = Math.min(durum.limit, toplam);
+
+  if(toplam === 0){
+    dom.kayitlar.className = "";
+    dom.kayitlar.innerHTML =
+      '<div class="bos">' +
+        '<h2>Bu ada uyan cilt yok</h2>' +
+        '<p>Aramayı kısaltmayı ya da süzgeçleri kaldırmayı dene.</p>' +
+        '<button type="button" class="dugme" id="bosTemizle">Süzgeçleri temizle</button>' +
+      '</div>';
+    const b = el("bosTemizle");
+    if(b) b.addEventListener("click", hepsiniTemizle);
+  }else{
+    dom.kayitlar.className = durum.gorunum === "liste" ? "liste" : "izgara";
+    dom.kayitlar.innerHTML = suzulen.slice(0, gosterilen).map(kartHtml).join("");
+  }
+
+  dom.daha.hidden = gosterilen >= toplam;
+  dom.sonucSayisi.textContent = (toplam === kitaplar.length)
+    ? sayiBicim.format(toplam) + " cilt"
+    : sayiBicim.format(toplam) + " / " + sayiBicim.format(kitaplar.length) + " cilt";
+
+  dom.temizle.hidden = !(durum.arama || durum.kategori || durum.yazar || durum.yayinevi);
+}
+
+function sayaciCiz(){
+  dom.sayac.innerHTML =
+    "<span><b>" + sayiBicim.format(kitaplar.length) + "</b> cilt</span><span>·</span>" +
+    "<span><b>" + sayiBicim.format(dizinler.kategori.size) + "</b> kategori</span><span>·</span>" +
+    "<span><b>" + sayiBicim.format(dizinler.yazar.size) + "</b> yazar</span><span>·</span>" +
+    "<span><b>" + sayiBicim.format(dizinler.yayinevi.size) + "</b> yayınevi</span>";
+}
+
+function kategoriRayiCiz(){
+  const kategoriler = sirali(dizinler.kategori);
+  dom.kategoriRay.innerHTML =
+    '<button type="button" class="cip" data-kategori="" aria-pressed="' + (durum.kategori === "") + '">Tümü <u>' +
+      sayiBicim.format(kitaplar.length) + '</u></button>' +
+    kategoriler.map(function(x){
+      return '<button type="button" class="cip" data-kategori="' + kacis(x[0]) + '" aria-pressed="' +
+        (durum.kategori === x[0]) + '" style="--k:' + kategoriRengi(x[0]) + '"><i></i>' +
+        kacis(x[0]) + ' <u>' + sayiBicim.format(x[1]) + '</u></button>';
+    }).join("");
+}
+
+function secimleriCiz(){
+  function doldur(secim, harita, bosYazi, secili){
+    secim.innerHTML = '<option value="">' + bosYazi + '</option>' +
+      sirali(harita).map(function(x){
+        return '<option value="' + kacis(x[0]) + '"' + (x[0] === secili ? " selected" : "") + '>' +
+          kacis(x[0]) + " (" + x[1] + ")</option>";
+      }).join("");
+  }
+  doldur(dom.fYazar, dizinler.yazar, "Tüm yazarlar", durum.yazar);
+  doldur(dom.fYayinevi, dizinler.yayinevi, "Tüm yayınevleri", durum.yayinevi);
+}
+
+function listeleriCiz(){
+  function yaz(id, degerler){
+    el(id).innerHTML = degerler.map(function(d){ return '<option value="' + kacis(d) + '"></option>'; }).join("");
+  }
+  yaz("lKategori", sirali(dizinler.kategori).map(function(x){ return x[0]; }));
+  yaz("lYazar", sirali(dizinler.yazar).map(function(x){ return x[0]; }));
+  yaz("lYayinevi", sirali(dizinler.yayinevi).map(function(x){ return x[0]; }));
+  yaz("lTur", Array.from(dizinler.tur).sort(harmanla.compare.bind(harmanla)));
+}
+
+function hepsiniCiz(){
+  kumeyiKur();
+  sayaciCiz();
+  kategoriRayiCiz();
+  secimleriCiz();
+  listeleriCiz();
+  ciz();
+}
+
+/* ===================================================================
+   8. OLAYLAR — süzgeçler
+   =================================================================== */
+dom.arama.addEventListener("input", gecikmeli(function(e){
+  durum.arama = e.target.value.trim();
+  durum.parcalar = katla(durum.arama).split(/\s+/).filter(Boolean);
+  durum.limit = ADIM;
+  ciz();
+}, 140));
+
+dom.kategoriRay.addEventListener("click", function(e){
+  const d = e.target.closest("[data-kategori]");
+  if(!d) return;
+  durum.kategori = (d.dataset.kategori === durum.kategori) ? "" : d.dataset.kategori;
+  durum.limit = ADIM;
+  kategoriRayiCiz(); ciz();
+});
+
+dom.kayitlar.addEventListener("click", function(e){
+  const kat = e.target.closest(".kategori-sec");
+  if(kat){
+    durum.kategori = kat.dataset.kategori;
+    durum.limit = ADIM;
+    kategoriRayiCiz(); ciz();
+    window.scrollTo({top:Math.max(0, dom.kategoriRay.offsetTop - 90), behavior:"smooth"});
+    return;
+  }
+  const silD = e.target.closest(".sil");
+  if(silD){ kitabiSil(silD.dataset.id); return; }
+  const duzD = e.target.closest(".duzenle");
+  if(duzD){ kipiAc(duzD.dataset.id); return; }
+});
+
+dom.fYazar.addEventListener("change", function(e){ durum.yazar = e.target.value; durum.limit = ADIM; ciz(); });
+dom.fYayinevi.addEventListener("change", function(e){ durum.yayinevi = e.target.value; durum.limit = ADIM; ciz(); });
+dom.fSirala.addEventListener("change", function(e){ durum.sirala = e.target.value; durum.limit = ADIM; ciz(); });
+
+function hepsiniTemizle(){
+  durum.arama = ""; durum.parcalar = [];
+  durum.kategori = ""; durum.yazar = ""; durum.yayinevi = "";
+  durum.limit = ADIM;
+  dom.arama.value = "";
+  dom.fYazar.value = ""; dom.fYayinevi.value = "";
+  kategoriRayiCiz(); ciz();
+}
+dom.temizle.addEventListener("click", hepsiniTemizle);
+
+Array.prototype.forEach.call(document.querySelectorAll("[data-gorunum]"), function(b){
+  b.setAttribute("aria-pressed", String(b.dataset.gorunum === durum.gorunum));
+  b.addEventListener("click", function(){
+    durum.gorunum = b.dataset.gorunum;
+    depo.yaz(GORUNUM_ANAHTAR, durum.gorunum);
+    Array.prototype.forEach.call(document.querySelectorAll("[data-gorunum]"), function(x){
+      x.setAttribute("aria-pressed", String(x.dataset.gorunum === durum.gorunum));
+    });
+    ciz();
+  });
+});
+
+function dahaYukle(){
+  if(durum.limit >= suzulen.length) return;
+  durum.limit += ADIM;
+  ciz();
+}
+dom.dahaDugme.addEventListener("click", dahaYukle);
+if("IntersectionObserver" in window){
+  new IntersectionObserver(function(g){ if(g[0].isIntersecting) dahaYukle(); }, {rootMargin:"600px"})
+    .observe(dom.nobetci);
+}
+
+document.addEventListener("keydown", function(e){
+  const etiket = document.activeElement ? document.activeElement.tagName : "";
+  if(e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(etiket)){
+    e.preventDefault(); dom.arama.focus(); dom.arama.select();
+  }
+  if(e.key === "Escape"){
+    if(!dom.perde.hidden) kipiKapat();
+    else if(document.activeElement === dom.arama && dom.arama.value) hepsiniTemizle();
+  }
+});
+
+/* ===================================================================
+   9. TEMA
+   =================================================================== */
+const TEMA_METNI = {
+  "orta-dunya":{fisilti:"Gezinen herkes kaybolmuş değildir", mihur:"Yol hep devam eder"},
+  "hogwarts":  {fisilti:"Yemin ederim ki yaramazlık peşindeyim", mihur:"Yaramazlık yapıldı"}
+};
+function temayiUygula(tema){
+  if(!TEMA_METNI[tema]) tema = "orta-dunya";
+  document.documentElement.dataset.tema = tema;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-tema-sec]"), function(b){
+    b.setAttribute("aria-pressed", String(b.dataset.temaSec === tema));
+  });
+  dom.fisilti.textContent = TEMA_METNI[tema].fisilti;
+  dom.mihur.textContent = TEMA_METNI[tema].mihur;
+  depo.yaz(TEMA_ANAHTAR, tema);
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-tema-sec]"), function(b){
+  b.addEventListener("click", function(){ temayiUygula(b.dataset.temaSec); });
+});
+
+/* ===================================================================
+   10. EKLE / DÜZENLE / SİL
+   =================================================================== */
+let duzenlenenId = null;
+let sonOdak = null;
+
+function kipiAc(id){
+  duzenlenenId = id || null;
+  sonOdak = document.activeElement;
+  const k = id ? kitaplar.filter(function(x){ return x.id === id; })[0] : null;
+
+  dom.kipBaslik.textContent = k ? "Kaydı düzenle" : "Kitap ekle";
+  dom.kipAltYazi.textContent = k
+    ? "Değişiklik bu tarayıcıda saklanır. Kalıcı yapmak için JSON indirip depoya koy."
+    : "Yeni cilt dizine eklenir ve bu tarayıcıda saklanır.";
+  dom.kipKaydet.textContent = k ? "Değişikliği kaydet" : "Dizine ekle";
+
+  el("gKitap").value = k ? k.kitap : "";
+  el("gYazar").value = k ? k.yazar : "";
+  el("gKategori").value = k ? k.kategori : (durum.kategori || "");
+  el("gTur").value = k ? k.tur : "";
+  el("gYayinevi").value = k ? k.yayinevi : "";
+  el("hKitap").textContent = ""; el("hKategori").textContent = "";
+  el("gKitap").removeAttribute("aria-invalid"); el("gKategori").removeAttribute("aria-invalid");
+
+  dom.perde.hidden = false;
+  setTimeout(function(){ el("gKitap").focus(); }, 30);
+}
+
+function kipiKapat(){
+  dom.perde.hidden = true;
+  duzenlenenId = null;
+  if(sonOdak && sonOdak.focus) sonOdak.focus();
+}
+el("kipIptal").addEventListener("click", kipiKapat);
+dom.perde.addEventListener("mousedown", function(e){ if(e.target === dom.perde) kipiKapat(); });
+
+dom.perde.addEventListener("keydown", function(e){
+  if(e.key !== "Tab") return;
+  const odaklanabilir = dom.perde.querySelectorAll("input,button,select,[href]");
+  if(!odaklanabilir.length) return;
+  const ilk = odaklanabilir[0], son = odaklanabilir[odaklanabilir.length-1];
+  if(e.shiftKey && document.activeElement === ilk){ e.preventDefault(); son.focus(); }
+  else if(!e.shiftKey && document.activeElement === son){ e.preventDefault(); ilk.focus(); }
+});
+
+dom.kipForm.addEventListener("submit", function(e){
+  e.preventDefault();
+  function v(ad){ return el(ad).value.trim(); }
+  const kitap = v("gKitap"), kategori = v("gKategori");
+  let gecerli = true;
+
+  if(!kitap){ el("hKitap").textContent = "Kitap adı gerekli."; el("gKitap").setAttribute("aria-invalid","true"); gecerli = false; }
+  else { el("hKitap").textContent = ""; el("gKitap").removeAttribute("aria-invalid"); }
+
+  if(!kategori){ el("hKategori").textContent = "Kategori gerekli."; el("gKategori").setAttribute("aria-invalid","true"); gecerli = false; }
+  else { el("hKategori").textContent = ""; el("gKategori").removeAttribute("aria-invalid"); }
+
+  if(!gecerli) return;
+
+  const alanlar = {kitap:kitap, kategori:kategori, yazar:v("gYazar"), tur:v("gTur"), yayinevi:v("gYayinevi")};
+
+  if(duzenlenenId){
+    const eklenen = fark.eklenen.filter(function(x){ return x.id === duzenlenenId; })[0];
+    if(eklenen) Object.assign(eklenen, alanlar);
+    else fark.duzenlenen[duzenlenenId] = Object.assign({}, fark.duzenlenen[duzenlenenId], alanlar);
+    farkKaydet(); hepsiniCiz();
+    bildir("“" + kitap + "” güncellendi.");
+  }else{
+    const enBuyuk = kitaplar.reduce(function(m,k){ return Math.max(m, Number(k.no)||0); }, 0);
+    fark.eklenen.push(Object.assign({id:"x"+Date.now().toString(36), no:enBuyuk+1}, alanlar));
+    farkKaydet(); hepsiniCiz();
+    bildir("“" + kitap + "” dizine eklendi.");
+  }
+  kipiKapat();
+});
+
+el("ekleAc").addEventListener("click", function(){ kipiAc(null); });
+
+function kitabiSil(id){
+  const k = kitaplar.filter(function(x){ return x.id === id; })[0];
+  if(!k) return;
+  const yedek = JSON.parse(JSON.stringify(fark));
+
+  const i = fark.eklenen.findIndex(function(x){ return x.id === id; });
+  if(i !== -1) fark.eklenen.splice(i,1);
+  else fark.silinen.push(id);
+
+  farkKaydet(); hepsiniCiz();
+  bildir("“" + k.kitap + "” dizinden çıkarıldı.", "Geri al", function(){
+    fark = yedek; farkKaydet(); hepsiniCiz();
+    bildir("“" + k.kitap + "” geri getirildi.");
+  });
+}
+
+/* ===================================================================
+   11. BİLDİRİM
+   =================================================================== */
+let bildirimZaman;
+function bildir(metin, eylemAdi, eylem){
+  clearTimeout(bildirimZaman);
+  dom.bildirimMetin.textContent = metin;
+  const eski = dom.bildirim.querySelector("button");
+  if(eski) eski.remove();
+  if(eylemAdi && eylem){
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = eylemAdi;
+    b.addEventListener("click", function(){ dom.bildirim.hidden = true; eylem(); });
+    dom.bildirim.appendChild(b);
+  }
+  dom.bildirim.hidden = false;
+  bildirimZaman = setTimeout(function(){ dom.bildirim.hidden = true; }, eylem ? 8000 : 3800);
+}
+
+/* ===================================================================
+   12. DIŞA / İÇE AKTARMA
+   =================================================================== */
+function aktarmaVerisi(){
+  return kitaplar.map(function(k){
+    return {no:k.no, kategori:k.kategori, tur:k.tur, yazar:k.yazar, kitap:k.kitap, yayinevi:k.yayinevi};
+  });
+}
+
+el("disaJson").addEventListener("click", function(){
+  indir("halim-kutuphanesi.json", JSON.stringify(aktarmaVerisi(), null, 2), "application/json;charset=utf-8");
+  bildir("JSON indirildi.");
+});
+
+el("disaCsv").addEventListener("click", function(){
+  const basliklar = ["No","Kategori","Tür / dizi","Yazar","Kitap adı / cilt","Yayınevi"];
+  function h(d){ return '"' + String(d == null ? "" : d).replace(/"/g,'""') + '"'; }
+  const satirlar = aktarmaVerisi().map(function(k){
+    return [k.no,k.kategori,k.tur,k.yazar,k.kitap,k.yayinevi].map(h).join(";");
+  });
+  // BOM: Excel'in Türkçe karakterleri doğru açması için
+  indir("halim-kutuphanesi.csv", "\uFEFF" + [basliklar.map(h).join(";")].concat(satirlar).join("\r\n"), "text/csv;charset=utf-8");
+  bildir("CSV indirildi.");
+});
+
+el("iceAktar").addEventListener("click", function(){ dom.dosya.click(); });
+dom.dosya.addEventListener("change", function(e){
+  const dosya = e.target.files && e.target.files[0];
+  if(!dosya) return;
+  const okuyucu = new FileReader();
+  okuyucu.onload = function(){
+    try{
+      const gelen = JSON.parse(okuyucu.result);
+      if(!Array.isArray(gelen)) throw new Error("Liste bekleniyordu.");
+      const mevcut = new Set(kitaplar.map(function(k){ return katla(k.kitap) + "|" + katla(k.yazar); }));
+      let sayi = 0;
+      for(const g of gelen){
+        const kitap = String(g.kitap || g["Kitap adı / cilt"] || "").trim();
+        if(!kitap) continue;
+        const yazar = String(g.yazar || g["Yazar"] || "").trim();
+        const imza = katla(kitap) + "|" + katla(yazar);
+        if(mevcut.has(imza)) continue;
+        mevcut.add(imza);
+        fark.eklenen.push({
+          id:"x" + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+          no:"", kitap:kitap, yazar:yazar,
+          kategori:String(g.kategori || g["Kategori"] || "Başvuru").trim(),
+          tur:String(g.tur || g["Tür / dizi"] || "").trim(),
+          yayinevi:String(g.yayinevi || g["Yayınevi"] || "").trim()
+        });
+        sayi++;
+      }
+      farkKaydet(); hepsiniCiz();
+      bildir(sayi ? sayiBicim.format(sayi) + " yeni cilt eklendi." : "Yeni cilt yoktu; hepsi zaten dizinde.");
+    }catch(hata){
+      bildir("Dosya okunamadı. Beklenen biçim: kitap kayıtlarından oluşan bir JSON listesi.");
+    }
+    e.target.value = "";
+  };
+  okuyucu.readAsText(dosya, "utf-8");
+});
+
+el("sifirla").addEventListener("click", function(){
+  const sayi = fark.eklenen.length + fark.silinen.length + Object.keys(fark.duzenlenen).length;
+  if(!sayi){ bildir("Geri alınacak bir değişiklik yok."); return; }
+  const yedek = JSON.parse(JSON.stringify(fark));
+  fark = {eklenen:[], silinen:[], duzenlenen:{}};
+  depo.temizle(ANAHTAR);
+  hepsiniCiz();
+  bildir(sayiBicim.format(sayi) + " değişiklik geri alındı.", "Vazgeç", function(){
+    fark = yedek; farkKaydet(); hepsiniCiz();
+    bildir("Değişiklikler geri yüklendi.");
+  });
+});
+
+/* ===================================================================
+   13. AÇILIŞ
+   =================================================================== */
+temayiUygula(depo.oku(TEMA_ANAHTAR, "orta-dunya"));
+hepsiniCiz();
+
+if(!depo.kullanilabilir()){
+  bildir("Tarayıcı belleği kapalı: eklediklerin yalnızca bu sekme açıkken durur.");
+}
+})();
+</script>
+</body>
+</html>
